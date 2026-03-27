@@ -1,0 +1,45 @@
+name: Feature request / 機能提案
+description: Suggest a new capability or improvement / 新機能や改善を提案する
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing an improvement.
+        機能提案ありがとうございます。
+  - type: input
+    id: problem
+    attributes:
+      label: Problem statement / 解決したい課題
+      description: What problem are you trying to solve? / 何を解決したいですか？
+      placeholder: The current workflow is unclear because ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution / 提案内容
+      description: Describe the feature or improvement.
+    validations:
+      required: true
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use case / 利用シーン
+      description: Who would use this and how? / 誰がどう使いますか？
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered / 検討した代替案
+      description: Other approaches you considered.
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context / 補足情報
+      description: Examples, prior art, screenshots, related projects, etc.
+    validations:
+      required: false

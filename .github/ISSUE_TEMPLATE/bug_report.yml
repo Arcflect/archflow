@@ -1,0 +1,54 @@
+name: Bug report / バグ報告
+description: Report something that is broken or inconsistent / 動作不良や不整合を報告する
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug.
+        バグ報告ありがとうございます。
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary / 概要
+      description: What is happening? / 何が起きていますか？
+      placeholder: A clear and short summary.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / 期待する動作
+      description: What did you expect instead? / 本来どうあるべきでしたか？
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / 再現手順
+      description: How can we reproduce it? / どのように再現できますか？
+      placeholder: |
+        1. Run ...
+        2. Use config ...
+        3. See error ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 環境
+      description: OS, shell, toolchain, Archflow version, etc.
+      placeholder: |
+        - OS:
+        - Rust:
+        - Archflow:
+        - Shell:
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context / 補足情報
+      description: Logs, screenshots, config snippets, or anything helpful.
+    validations:
+      required: false
