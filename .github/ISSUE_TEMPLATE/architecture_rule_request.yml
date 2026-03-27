@@ -1,0 +1,73 @@
+name: Architecture rule request / アーキテクチャルール提案
+description: Propose a contract pattern, placement rule, or artifact policy / contract や配置ルールを提案する
+labels: [design]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for proposing architecture-related rules.
+        配置ルールや contract 方針など、アーキテクチャ関連の提案はこちらを使ってください。
+  - type: input
+    id: target_role
+    attributes:
+      label: Target role / 対象ロール
+      description: Example: usecase, entity, handler, repository_port
+      placeholder: usecase
+    validations:
+      required: true
+  - type: input
+    id: target_module
+    attributes:
+      label: Target module / 対象モジュール
+      description: Example: user, auth, billing
+      placeholder: user
+    validations:
+      required: false
+  - type: input
+    id: expected_placement
+    attributes:
+      label: Expected placement / 想定配置
+      description: Where should it live? / どこに置く想定ですか？
+      placeholder: src/application/usecases/
+    validations:
+      required: true
+  - type: textarea
+    id: responsibilities
+    attributes:
+      label: Expected responsibilities / 想定責務
+      description: What should this artifact do?
+      placeholder: |
+        - Accept input
+        - Apply domain rules
+        - Delegate persistence through a port
+    validations:
+      required: true
+  - type: textarea
+    id: forbidden
+    attributes:
+      label: Forbidden behavior / 禁止事項
+      description: What should it not do?
+      placeholder: |
+        - Must not write SQL directly
+        - Must not depend on HTTP types
+    validations:
+      required: false
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale / 背景・理由
+      description: Why should this rule exist? / なぜこのルールが必要ですか？
+    validations:
+      required: true
+  - type: textarea
+    id: example_tree
+    attributes:
+      label: Example structure / 構成例
+      description: Show an example tree or artifact mapping.
+      placeholder: |
+        src/
+          application/
+            usecases/
+              create_user.rs
+    validations:
+      required: false

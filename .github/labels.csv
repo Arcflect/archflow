@@ -1,0 +1,8 @@
+name,color,description
+bug,d73a4a,Defects or broken behavior
+enhancement,a2eeef,Feature or improvement request
+design,5319e7,Architecture contract or rule design topic
+docs,0075ca,Documentation work
+good first issue,7057ff,Suitable for first-time contributors
+discussion,fbca04,Needs open discussion before implementation
+blocked,b60205,Waiting on another issue or decision
