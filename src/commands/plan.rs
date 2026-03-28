@@ -1,4 +1,4 @@
-use crate::config::{PlacementRulesConfig, ProjectConfig};
+use crate::config::{ArtifactsPlanConfig, PlacementRulesConfig, ProjectConfig};
 
 pub fn execute() {
     println!("Loading project architecture...");
@@ -17,10 +17,21 @@ pub fn execute() {
     match PlacementRulesConfig::load("placement.rules.yaml") {
         Ok(config) => {
             println!("Successfully loaded {} placement rules", config.roles.len());
-            println!("Plan command executed (stub)");
         }
         Err(e) => {
             eprintln!("Error loading placement rules: {}", e);
+            std::process::exit(1);
+        }
+    }
+
+    println!("Loading artifacts plan...");
+    match ArtifactsPlanConfig::load("artifacts.plan.yaml") {
+        Ok(config) => {
+            println!("Successfully loaded {} artifacts", config.artifacts.len());
+            println!("Plan command executed (stub)");
+        }
+        Err(e) => {
+            eprintln!("Error loading artifacts plan: {}", e);
             std::process::exit(1);
         }
     }
