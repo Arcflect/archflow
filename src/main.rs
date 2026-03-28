@@ -2,6 +2,7 @@ mod cli;
 mod commands;
 mod config;
 mod generator;
+pub mod model;
 
 use clap::Parser;
 use cli::{Cli, Commands};

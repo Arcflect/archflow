@@ -1,5 +1,5 @@
-use crate::config::artifact::Artifact;
 use crate::config::placement::PlacementRulesConfig;
+use crate::model::artifact::Artifact;
 use std::path::PathBuf;
 use thiserror::Error;
 

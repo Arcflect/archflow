@@ -40,7 +40,11 @@ pub fn execute() {
         match crate::generator::resolve_artifact_path(artifact, &placement_config) {
             Ok(path) => {
                 let role_config = placement_config.roles.get(&artifact.role);
-                match crate::generator::scaffold::generate_artifact_with_sidecars(artifact, &path, role_config) {
+                match crate::generator::scaffold::generate_artifact_with_sidecars(
+                    artifact,
+                    &path,
+                    role_config,
+                ) {
                     Ok(_) => {
                         println!(
                             "  [+] {} [{}] -> {}",
@@ -53,9 +57,7 @@ pub fn execute() {
                     Err(e) => {
                         eprintln!(
                             "  [!] {} [{}]: Generation Error: {}",
-                            artifact.name,
-                            artifact.role,
-                            e
+                            artifact.name, artifact.role, e
                         );
                         error_count += 1;
                     }
@@ -64,9 +66,7 @@ pub fn execute() {
             Err(e) => {
                 eprintln!(
                     "  [!] {} [{}]: Path Error: {}",
-                    artifact.name,
-                    artifact.role,
-                    e
+                    artifact.name, artifact.role, e
                 );
                 error_count += 1;
             }
@@ -78,7 +78,7 @@ pub fn execute() {
         "Scaffold result: {} generated, {} errors.",
         success_count, error_count
     );
-    
+
     if error_count > 0 {
         std::process::exit(1);
     }
