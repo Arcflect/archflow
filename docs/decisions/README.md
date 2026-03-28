@@ -11,6 +11,7 @@ Archflow includes many design choices that may otherwise become unclear later, s
 - how prompts relate to contracts
 - how examples relate to presets
 - how much Archflow should depend on code-aware analysis
+- how verification should begin
 
 These decision records help contributors understand not only **what** the project does,
 but also **why** it was designed this way.
@@ -135,11 +136,13 @@ Decision files explain why important choices were made.
 
 The initial set of decisions focuses on core Archflow direction:
 
-- Archflow is an architecture-to-execution bridge
-- Contracts are the source of truth for artifact boundaries
-- Prompts are derived from contracts
-- Sidecar files are first-class
-- Examples come before presets
+- `0001` Archflow is an architecture-to-execution bridge
+- `0002` Contract is the source of truth for artifact boundaries
+- `0003` Prompts are derived from contracts
+- `0004` Sidecar files are first-class
+- `0005` Examples precede presets
+- `0006` Verify starts with structure and contract consistency
+- `0007` Archflow remains sidecar-first before code-aware analysis
 
 These decisions establish the early shape of the project.
 
