@@ -1,5 +1,5 @@
-use crate::config::artifact::Artifact;
-use crate::config::placement::RolePlacement;
+use crate::model::artifact::Artifact;
+use crate::model::placement::RolePlacement;
 use std::fs;
 use std::path::{Path, PathBuf};
 use thiserror::Error;
