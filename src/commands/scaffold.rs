@@ -31,17 +31,55 @@ pub fn execute() {
     println!("Style:   {}", project_config.project.architecture_style);
     println!("Modules: {}", project_config.modules.len());
     println!();
-    
+
     println!("Generating Artifacts:");
     let mut success_count = 0;
     let mut error_count = 0;
 
     for artifact in &artifacts_config.artifacts {
         match crate::generator::resolve_artifact_path(artifact, &placement_config) {
-            Ok(path) => println!("  - {} -> {}", artifact.name, path.display()),
-            Err(e) => eprintln!("  - {}: Error: {}", artifact.name, e),
+            Ok(path) => {
+                let role_config = placement_config.roles.get(&artifact.role);
+                match crate::generator::scaffold::generate_artifact_with_sidecars(artifact, &path, role_config) {
+                    Ok(_) => {
+                        println!(
+                            "  [+] {} [{}] -> {}",
+                            artifact.name,
+                            artifact.role,
+                            path.display()
+                        );
+                        success_count += 1;
+                    }
+                    Err(e) => {
+                        eprintln!(
+                            "  [!] {} [{}]: Generation Error: {}",
+                            artifact.name,
+                            artifact.role,
+                            e
+                        );
+                        error_count += 1;
+                    }
+                }
+            }
+            Err(e) => {
+                eprintln!(
+                    "  [!] {} [{}]: Path Error: {}",
+                    artifact.name,
+                    artifact.role,
+                    e
+                );
+                error_count += 1;
+            }
         }
     }
 
-    println!("\nScaffold command executed (stub)");
+    println!();
+    println!(
+        "Scaffold result: {} generated, {} errors.",
+        success_count, error_count
+    );
+    
+    if error_count > 0 {
+        std::process::exit(1);
+    }
 }
