@@ -428,3 +428,436 @@ Then add:
 - `contracts.template.yaml`
 
 Everything else builds from there.
+
+---
+
+## 日本語
+
+このガイドは Archflow のスキーマファイルの使い方を説明します。
+
+目的は、ユーザーが以下を理解するのを助けることです。
+
+- Archflow が期待するファイル
+- どのファイルが必須か
+- どの順序で書くべきか
+- 最小限の有用なセットアップがどのようなものか
+
+このガイドは意図的に実用的です。
+正式な仕様のリファレンスではありません。
+フィールドレベルの定義については、`schemas/` 下のファイルを参照してください。
+
+---
+
+### 概要
+
+Archflow は、実装が始まる前にアーキテクチャを記述するための構造化された定義ファイルを使用します。
+
+これらのファイルは以下を定義します。
+
+- プロジェクトコンテキスト
+- artifact がどこに配置されるべきか
+- どの artifact が存在すべきか
+- どのような責務と constraint を持つべきか
+- それらの constraint を AI システムにどのようにハンドオフするか
+
+`schemas/` のスキーマファイルは、これらの定義ファイルの構造を記述します。
+
+---
+
+### スキーマファイル
+
+Archflow は現在、次のスキーマドラフトを定義しています。
+
+- `schemas/project.schema.yaml`
+- `schemas/placement-rules.schema.yaml`
+- `schemas/contracts-template.schema.yaml`
+- `schemas/artifacts-plan.schema.yaml`
+- `schemas/contract.schema.yaml`
+- `schemas/prompt.schema.yaml`
+
+これらすべてをユーザーが直接書く必要はありません。
+
+一部は主要な入力ファイルです。
+その他は生成された出力やサポート構造です。
+
+---
+
+### ユーザーが通常書くもの
+
+通常のワークフローでは、ユーザーは最初にこれらのファイルを書きます。
+
+1. `project.arch.yaml`
+2. `placement.rules.yaml`
+3. `artifacts.plan.yaml`
+
+任意で、ユーザーは次も書く場合があります。
+
+4. `contracts.template.yaml`
+
+これらのファイルは、Archflow の計画とスキャフォルド生成の主要な入力です。
+
+---
+
+### Archflow が生成する可能性があるもの
+
+Archflow は次のようなファイルを生成または導出することが期待されます。
+
+- artifact contract ファイル
+- prompt ファイル
+- スキャフォルドされた仮のファイル
+- 解決されたパス
+
+つまり：
+
+- `contract.schema.yaml` は通常、生成された artifact contract を記述します
+- `prompt.schema.yaml` は通常、生成された AI ハンドオフ prompt を記述します
+
+ユーザーが毎回手で作成しなくても、これらを理解しておくことは重要です。
+
+---
+
+### 推奨される作成順序
+
+ゼロから始める場合は、この順序でファイルを書いてください。
+
+#### 1. プロジェクト定義
+
+プロジェクト定義から始めます。
+
+ファイル：
+- `project.arch.yaml`
+
+これはプロジェクト全体のアーキテクチャの枠組みを定義します。
+
+次のことに答えます。
+- このプロジェクトがどのような種類か
+- どのアーキテクチャスタイルに従うか
+- どのモジュールが存在するか
+- どの言語の方向性を想定しているか
+
+このファイルがなければ、残りの構造にはコンテキストがありません。
+
+---
+
+#### 2. 配置ルール
+
+次に、配置ルールを定義します。
+
+ファイル：
+- `placement.rules.yaml`
+
+これはロールを場所にマッピングします。
+
+次のことに答えます。
+- `entity` artifact がどこに配置されるべきか
+- `usecase` artifact がどこに配置されるべきか
+- `controller` artifact がどこに配置されるべきか
+
+配置ルールがなければ、Archflow はパスを一貫して解決できません。
+
+---
+
+#### 3. Artifact プラン
+
+次に、計画された artifact を定義します。
+
+ファイル：
+- `artifacts.plan.yaml`
+
+これは Archflow がスキャフォルドまたは準備すべき実装ユニットをリストアップします。
+
+次のことに答えます。
+- どの artifact が存在すべきか
+- 各 artifact がどのモジュールに属するか
+- 各 artifact がどのロールを持つか
+- 任意の入力と出力
+
+Artifact プランがなければ、Archflow は何を作成すべきかわかりません。
+
+---
+
+#### 4. Contract テンプレート（任意だが推奨）
+
+ロールベースのデフォルトが欲しい場合は、contract テンプレートを定義します。
+
+ファイル：
+- `contracts.template.yaml`
+
+これはロール別の再利用可能なデフォルトを提供します。
+
+次のことに答えます。
+- `usecase` artifact が通常何をするか
+- `entity` artifact が何をしてはいけないか
+- どのデフォルト依存境界が適用されるべきか
+
+このファイルは任意ですが、contract をより一貫させるため強く推奨します。
+
+---
+
+### 最小限の有用なセットアップ
+
+最小限の有用な Archflow セットアップは次のとおりです。
+
+- `project.arch.yaml`
+- `placement.rules.yaml`
+- `artifacts.plan.yaml`
+
+次のことを表現するのに十分です。
+
+- プロジェクトコンテキスト
+- ロール-パスのマッピング
+- artifact のインベントリ
+
+最小セットアップでは `contracts.template.yaml` を省略できますが、
+それは通常、後で contract をより手動で書く必要があることを意味します。
+
+---
+
+### 推奨セットアップ
+
+より完全で推奨されるセットアップは次のとおりです。
+
+- `project.arch.yaml`
+- `placement.rules.yaml`
+- `artifacts.plan.yaml`
+- `contracts.template.yaml`
+
+これにより Archflow は以下をサポートするのに十分な情報を持ちます。
+
+- スキャフォルド計画
+- ロールベースの contract 生成
+- prompt 生成
+- 将来の verify
+
+これはほとんどのプロジェクトのための推奨される出発点です。
+
+---
+
+### ファイルの役割一覧
+
+| ファイル | 通常ユーザーが書く | 通常 Archflow が生成する | 目的 |
+|---|---|---|---|
+| `project.arch.yaml` | はい | いいえ | プロジェクトコンテキストを定義する |
+| `placement.rules.yaml` | はい | いいえ | ロールをパスにマッピングする |
+| `artifacts.plan.yaml` | はい | いいえ | 存在すべき artifact を定義する |
+| `contracts.template.yaml` | しばしば | いいえ | デフォルトのロールベースの contract 動作を定義する |
+| `*.contract.yaml` | ときに | しばしば | artifact 固有の責務と constraint を定義する |
+| `*.prompt.md` またはプロンプトデータ | めったに | しばしば | AI ハンドオフの指示を定義する |
+
+---
+
+### 最小の例
+
+最も実用的な最小例のセットはこのとおりです。
+
+#### `project.arch.yaml`
+
+```yaml
+project:
+  name: minimal-app
+  architecture_style: simple
+  language: generic
+
+modules:
+  - name: user
+    features:
+      - create_user
+      - user_entity
+```
+
+#### `placement.rules.yaml`
+
+```yaml
+roles:
+  usecase:
+    path: src/application/usecases/
+  entity:
+    path: src/domain/entities/
+```
+
+#### `artifacts.plan.yaml`
+
+```yaml
+artifacts:
+  - name: create_user
+    module: user
+    role: usecase
+    inputs:
+      - CreateUserCommand
+    outputs:
+      - CreateUserResult
+
+  - name: user
+    module: user
+    role: entity
+    outputs:
+      - User
+```
+
+---
+
+計画またはスキャフォルドを開始するのに十分です。
+
+---
+
+### contract テンプレートを追加するタイミング
+
+次の場合に `contracts.template.yaml` を追加すべきです。
+
+- 同じロールの artifact がデフォルトを共有することを望む場合
+- より明確な依存境界を望む場合
+- prompt 生成をより一貫させたい場合
+- 将来の verify がより強いデフォルトに依存することを望む場合
+
+Contract テンプレートは、同じロールが複数のモジュールに繰り返し現れるようになると特に有用になります。
+
+---
+
+### ファイル間の関係
+
+ファイルはこの順序で連携します。
+
+- `project.arch.yaml` はコンテキストを定義する
+- `placement.rules.yaml` はロールがどこに配置されるかを定義する
+- `artifacts.plan.yaml` は何が存在すべきかを定義する
+- `contracts.template.yaml` はデフォルトの contract 動作を定義する
+- Archflow は artifact contract を生成または洗練させる
+- Archflow は contract から prompt を生成する
+
+これが意味することは：
+
+- project が意味を与える
+- placement rules が場所を与える
+- artifacts が実行ユニットを与える
+- contracts が境界を与える
+- prompts が AI ハンドオフを与える
+
+---
+
+### 必須のファイル
+
+現在のドラフトレベルでは、実用的な必須ファイルは次のとおりです。
+
+#### 有意義なセットアップに必要
+
+- `project.arch.yaml`
+- `placement.rules.yaml`
+- `artifacts.plan.yaml`
+
+#### 推奨
+
+- `contracts.template.yaml`
+
+#### 通常後で生成される
+
+- `*.contract.yaml`
+- prompt ファイル
+
+---
+
+### よくある間違い
+
+#### ロールを定義する前に artifact を書く
+
+artifact のロールが配置ルールと整合されていない場合、パスが不明確になります。
+
+#### プロジェクトファイルを完全な設計ドキュメントとして扱う
+
+プロジェクトファイルはアーキテクチャの枠組みを定義すべきであり、完全なビジネスロジックではありません。
+
+#### contract を完全に省略する
+
+テンプレートが任意であっても、contract の定義なしでは Archflow モデル全体が大幅に弱くなります。
+
+#### prompt を真実の源にする
+
+Prompt は contract から導出されるべきであり、contract を置き換えるべきではありません。
+
+#### ファイル間でロール命名を混在させる
+
+あるファイルが `usecase` と言い、別のファイルが同じ概念に `application_service` と言う場合、一貫性が難しくなります。
+
+---
+
+### 実践的な開始パス
+
+最もシンプルなパスを望む場合は、このワークフローを使用してください。
+
+1. `project.arch.yaml` を作成する
+2. `placement.rules.yaml` を作成する
+3. `artifacts.plan.yaml` を作成する
+4. 任意で `contracts.template.yaml` を作成する
+5. `examples/` 下の examples を使用する
+6. contract を生成またはドラフトする
+7. prompt を生成する
+8. 後で整合性を verify する
+
+このパスは、完全な CLI が存在する前でも Archflow を概念的に使用し始めるのに十分です。
+
+---
+
+### 推奨命名規則
+
+可能な限り、これらの命名パターンを一貫して使用してください。
+
+- `project.arch.yaml`
+- `placement.rules.yaml`
+- `artifacts.plan.yaml`
+- `contracts.template.yaml`
+
+生成されたファイルには：
+
+- `<artifact>.contract.yaml`
+- `<artifact>.prompt.md`
+
+これらの名前は読みやすく、安定していて、教えやすいです。
+
+---
+
+### 次に見るべき場所
+
+examples については：
+
+- `examples/README.md`
+- `examples/minimal/`
+- `examples/generic-layered/`
+- `examples/rust-clean-hexagonal/`
+
+概念定義については：
+
+- `docs/concepts/project.md`
+- `docs/concepts/module.md`
+- `docs/concepts/role.md`
+- `docs/concepts/placement-rule.md`
+- `docs/concepts/artifact.md`
+- `docs/concepts/contract.md`
+- `docs/concepts/prompt.md`
+- `docs/concepts/scaffold.md`
+- `docs/concepts/verify.md`
+
+フィールド定義については：
+
+- `schemas/project.schema.yaml`
+- `schemas/placement-rules.schema.yaml`
+- `schemas/contracts-template.schema.yaml`
+- `schemas/artifacts-plan.schema.yaml`
+- `schemas/contract.schema.yaml`
+- `schemas/prompt.schema.yaml`
+
+---
+
+### まとめ
+
+1 つだけ覚えておくなら、これを覚えてください。
+
+まず以下から始めます：
+
+- `project.arch.yaml`
+- `placement.rules.yaml`
+- `artifacts.plan.yaml`
+
+次に追加します：
+
+- `contracts.template.yaml`
+
+それ以外はすべてここから構築されます。

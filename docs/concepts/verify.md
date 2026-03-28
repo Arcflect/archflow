@@ -293,3 +293,142 @@ and scaffold outputs remain aligned with architectural intent.
 If you remember only one thing, remember this:
 
 **scaffold creates the structure, verify protects it over time**
+
+---
+
+## 日本語
+
+# Verify（検証）
+
+## 概要
+
+Archflow における **Verify** は、プロジェクト構造と artifact の定義が時間をかけて整合したままであるかどうかをチェックする操作です。
+
+verify は次のような問いに答えます。
+
+- 定義された artifact に対応するファイルは存在するか？
+- ロール、パス、contract が一貫しているか？
+- 実際の構造はアーキテクチャの意図と整合しているか？
+
+Verify は Archflow のアーキテクチャメモリを保護する方法です。
+
+---
+
+## 目的
+
+verify の目的は、アーキテクチャの整合性の崩壊を早期に検出することです。
+
+verify は次のような問いに答えます。
+
+- すべての計画された artifact に contract ファイルがあるか？
+- ロール名はファイル全体で一貫しているか？
+- artifact パスは配置ルールと一致しているか？
+- 必要な contract フィールドは存在するか？
+- 期待される場所に prompt ファイルは存在するか？
+
+Verify がなければ、contract と prompt は実際の構造からずれる可能性があります。
+
+---
+
+## 責務
+
+Verify は次の責務を持ちます。
+
+- 必要な入力ファイルの存在をチェックする
+- artifact と contract の整合性をチェックする
+- ロールとパスの整合性をチェックする
+- 必須の contract フィールドの存在をチェックする
+- prompt の存在と導出の整合性をチェックする
+- artifact ステータスの整合性をチェックする
+
+Verify は次の責務を持ちません。
+
+- 実際のビジネスロジックを実装すること
+- コードのコンパイルや実行をチェックすること（最初のフェーズでは）
+- ソースコード内の実装のずれを検出すること（最初のフェーズでは）
+
+---
+
+## Verify と Scaffold の関係
+
+Scaffold と verify は異なる目的を果たします。
+
+- **scaffold** は構造を作成します
+- **verify** はその構造が時間とともに整合したままかどうかをチェックします
+
+一般的なワークフローは次のとおりです。
+
+1. 定義ファイルを書く（project、placement rules、artifacts）
+2. スキャフォルドを実行する
+3. Contract と prompt を生成または洗練させる
+4. Verify を実行して整合性を確認する
+5. 変更を加え、整合性を維持するために定期的に verify を再実行する
+
+---
+
+## Verify がチェックすること（最初のスコープ）
+
+Archflow の最初の verify フェーズは次に焦点を当てます。
+
+### 1. 必須入力ファイルの存在
+
+- `project.arch.yaml` が存在する
+- `placement.rules.yaml` が存在する
+- `artifacts.plan.yaml` が存在する
+
+### 2. Artifact-contract の整合性
+
+- すべての計画された artifact に contract がある
+- contract の名前が artifact と一致する
+- contract のロールが artifact と一致する
+
+### 3. ロール-パスの整合性
+
+- artifact のロールが配置ルールに存在する
+- 解決されたパスが配置ルールと一致する
+
+### 4. 必須 contract フィールドの存在
+
+- `name`、`module`、`role`、`path`、`responsibilities`、`must_not`、`status`
+
+### 5. Prompt の整合性
+
+- 期待される prompt ファイルが存在する
+- prompt の artifact 名が contract と整合する
+
+### 6. ステータスの整合性
+
+- artifact と contract のステータスが矛盾しない
+
+---
+
+## Verify の将来の拡張
+
+将来的に、verify は次のものをサポートするかもしれません。
+
+- 任意のコード認識チェック
+- 依存関係境界のバリデーション
+- CI 統合
+- 言語固有の構造チェック
+
+しかし、最初の verify フェーズは sidecar ファーストモデルの構造的整合性をサポートします。
+
+---
+
+## 他の概念との関係
+
+Verify は次のものに依存します。
+
+- **project**: verify が行われるコンテキスト
+- **artifact プラン**: 何が存在すべきかを定義する
+- **placement rule**: artifact パスを解決するために使用される
+- **contract**: verify の主要な真実の源
+- **scaffold**: verify がチェックする構造を生成する
+
+Verify は Archflow の一貫性チェックレイヤーです。
+
+プロジェクト構造、contract、prompt、スキャフォルド出力がアーキテクチャの意図と整合したままであることを確保するために存在します。
+
+1 つだけ覚えておくなら、これを覚えてください。
+
+**スキャフォルドは構造を作成し、verify はそれを時間とともに保護する**

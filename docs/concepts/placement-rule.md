@@ -167,3 +167,100 @@ In the future, placement rules may also support:
 - role-specific file naming policies
 - ecosystem-specific conventions
 - stronger validation against scaffold output
+
+---
+
+## 日本語
+
+# Placement Rule（配置ルール）
+
+## 概要
+
+Archflow における **Placement Rule** は、ロールをプロジェクト構造の場所にマッピングするルールです。
+
+配置ルールは Archflow が各 artifact のロールに基づいてファイルパスを解決するのに役立ちます。
+
+---
+
+## 目的
+
+配置ルールの目的は、アーキテクチャ上の分類（ロール）を具体的な場所（ファイルパス）に変換することです。
+
+配置ルールは次のような質問に答えます。
+
+- `entity` ロールを持つ artifact はどこに配置すべきか？
+- `usecase` ロールを持つ artifact はどこに配置すべきか？
+- `controller` ロールを持つ artifact はどこに配置すべきか？
+
+配置ルールがなければ、Archflow はアーキテクチャの意図を具体的な構造に変換できません。
+
+---
+
+## 責務
+
+配置ルールは次の責務を持ちます。
+
+- ロールを具体的なディレクトリパスにマッピングする
+- ファイル拡張子や命名パターンを定義する（任意）
+- 一貫したスキャフォルド出力の基盤を提供する
+
+配置ルールは次の責務を持ちません。
+
+- artifact の振る舞いを定義すること（それは contract に属します）
+- artifact の責務を定義すること（それも contract に属します）
+- ロール自体を定義すること（それはロール概念に属します）
+
+---
+
+## 例
+
+```yaml
+roles:
+  entity:
+    path: src/domain/entities/
+    extension: .rs
+
+  usecase:
+    path: src/application/usecases/
+    extension: .rs
+
+  controller:
+    path: src/interfaces/controllers/
+    extension: .rs
+
+  repository_port:
+    path: src/domain/ports/
+    extension: .rs
+```
+
+この例では：
+
+- `entity` ロールのすべての artifact は `src/domain/entities/` に配置される
+- `usecase` ロールのすべての artifact は `src/application/usecases/` に配置される
+
+これにより Archflow はアーキテクチャスタイルの宣言から直接パスを解決できます。
+
+---
+
+## 他の概念との関係
+
+配置ルールは次のものと連携します。
+
+- **role**: 配置ルールを適用するアーキテクチャ分類
+- **artifact**: 解決されたパスを与えられるユニット
+- **project**: パスが解釈されるグローバルコンテキスト
+- **scaffold**: 解決されたパスに基づいて構造を生成する
+
+配置ルールは場所を定義しますが、振る舞いは定義しません。
+
+---
+
+## 将来の方向性
+
+将来的に、配置ルールは次のものをサポートするかもしれません。
+
+- プリセットが提供するデフォルト
+- パスオーバーライドの優先順位ルール
+- ロール固有のファイル命名ポリシー
+- エコシステム固有の慣習
+- スキャフォルド出力に対するより強いバリデーション

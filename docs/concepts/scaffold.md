@@ -255,3 +255,115 @@ In the future, scaffolding may also support:
 Even with those extensions, the core purpose stays the same:
 
 a scaffold turns architectural definitions into implementation-ready structure.
+
+---
+
+## 日本語
+
+# Scaffold（スキャフォルド）
+
+## 概要
+
+Archflow における **Scaffold** は、アーキテクチャ定義を実装可能な構造に変換する操作です。
+
+スキャフォルドは次のような問いに答えます。
+
+- project.arch.yaml、placement.rules.yaml、artifacts.plan.yaml を定義したら、実際のファイルと構造はどのように見えるか？
+
+スキャフォルドはアーキテクチャの意図とリポジトリの実際の内容の間のブリッジです。
+
+---
+
+## 目的
+
+スキャフォルドの目的は、計画された artifact を具体的なリポジトリ構造に変換することです。
+
+スキャフォルドは次のような問いに答えます。
+
+- どのディレクトリを作成すべきか？
+- どのファイルを作成すべきか？
+- どのファイルを仮のプレースホルダーとして作成すべきか？
+- どのような sidecar ファイル（contract、prompt）を生成すべきか？
+- どのような既存のファイルが期待される場所に存在するか？
+
+スキャフォルドがなければ、Archflow の計画ステップは実際のリポジトリ変更に接続されません。
+
+---
+
+## 責務
+
+スキャフォルドは次の責務を持ちます。
+
+- パスを artifact の定義から解決する
+- 計画された構造を反映するディレクトリを作成する
+- 仮の実装ファイルを生成する
+- 対応する sidecar ファイルを生成する（contract、prompt）
+- 既存のファイルに対して生成された構造の整合性をサポートする
+
+スキャフォルドは次の責務を持ちません。
+
+- 実際のビジネスロジックを実装すること（それは人間または AI によって行われます）
+- モジュールまたはロールの定義を変更すること
+- アーキテクチャの意図を決定すること（それは project、placement rules、artifact プランから来ます）
+
+---
+
+## スキャフォルドの出力
+
+典型的なスキャフォルドは次のものを生成します。
+
+- サービス、モジュール、機能の**ディレクトリ**
+- ロールごとの**stub またはプレースホルダーファイル**
+- artifact ごとの**contract ファイル**（.contract.yaml）
+- artifact ごとの**prompt ファイル**（.prompt.md など）
+
+例えば、`create_user` という名前の `usecase` artifact は次のものになるかもしれません。
+
+- ディレクトリ: `src/application/usecases/`
+- stub ファイル: `src/application/usecases/create_user.rs`
+- contract: `src/application/usecases/create_user.contract.yaml`
+- prompt: `src/application/usecases/create_user.prompt.md`
+
+---
+
+## 他の概念との関係
+
+スキャフォルドは次のものに依存します。
+
+- **artifact プラン**: スキャフォルドされる artifact を定義する
+- **placement rule**: ファイルパスを解決する
+- **contract**: スキャフォルドとともに生成される sidecar ファイルを定義する
+- **prompt**: スキャフォルドとともに生成される AI ハンドオフドキュメント
+
+そして次のものを支援します。
+
+- **verify**: スキャフォルドされた構造が artifact 定義と整合しているかどうかをチェックする
+
+---
+
+## Sidecar ファーストスキャフォルド
+
+Archflow は sidecar ファーストモデルをサポートします。
+
+これが意味することは：
+
+- 実装ファイルが空または仮であっても、contract と prompt ファイルはファーストクラスであるべきです
+- スキャフォルドが完了した後に AI ツールに artifact をハンドオフできます
+- contract と prompt は実装と一緒または実装の前に生成できます
+
+このモデルにより、Archflow は設計段階とコーディング段階の間で有用です。
+
+---
+
+## 将来の方向性
+
+将来的に、スキャフォルドは次のものをサポートするかもしれません。
+
+- 既存のファイルとの比較（スキャフォルド diffing）
+- 部分的な再スキャフォルド
+- スキャフォルドバリデーションフック
+- エコシステム固有の出力慣習
+
+それらの拡張があっても、コアの目的は変わりません。
+
+スキャフォルドはアーキテクチャ定義を実装可能な構造に変換します。
