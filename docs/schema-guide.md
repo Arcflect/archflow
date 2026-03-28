@@ -393,9 +393,14 @@ For examples, see:
 For concept definitions, see:
 
 - `docs/concepts/project.md`
+- `docs/concepts/module.md`
+- `docs/concepts/role.md`
+- `docs/concepts/placement-rule.md`
 - `docs/concepts/artifact.md`
 - `docs/concepts/contract.md`
 - `docs/concepts/prompt.md`
+- `docs/concepts/scaffold.md`
+- `docs/concepts/verify.md`
 
 For field definitions, see:
 

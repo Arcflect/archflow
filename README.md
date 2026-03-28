@@ -98,9 +98,14 @@ If you want to understand the model, roadmap, and design decisions in more detai
 
 Core concepts:
 - [docs/concepts/project.md](./docs/concepts/project.md)
+- [docs/concepts/module.md](./docs/concepts/module.md)
+- [docs/concepts/role.md](./docs/concepts/role.md)
+- [docs/concepts/placement-rule.md](./docs/concepts/placement-rule.md)
 - [docs/concepts/artifact.md](./docs/concepts/artifact.md)
 - [docs/concepts/contract.md](./docs/concepts/contract.md)
 - [docs/concepts/prompt.md](./docs/concepts/prompt.md)
+- [docs/concepts/scaffold.md](./docs/concepts/scaffold.md)
+- [docs/concepts/verify.md](./docs/concepts/verify.md)
 
 Schema drafts:
 - [schemas/project.schema.yaml](./schemas/project.schema.yaml)
@@ -115,10 +120,15 @@ Recommended reading order:
 2. [docs/schema-guide.md](./docs/schema-guide.md)
 3. [docs/architecture-flow.md](./docs/architecture-flow.md)
 4. [docs/concepts/project.md](./docs/concepts/project.md)
-5. [docs/concepts/artifact.md](./docs/concepts/artifact.md)
-6. [docs/concepts/contract.md](./docs/concepts/contract.md)
-7. [docs/concepts/prompt.md](./docs/concepts/prompt.md)
-8. [docs/decisions/README.md](./docs/decisions/README.md)
+5. [docs/concepts/module.md](./docs/concepts/module.md)
+6. [docs/concepts/role.md](./docs/concepts/role.md)
+7. [docs/concepts/placement-rule.md](./docs/concepts/placement-rule.md)
+8. [docs/concepts/artifact.md](./docs/concepts/artifact.md)
+9. [docs/concepts/contract.md](./docs/concepts/contract.md)
+10. [docs/concepts/prompt.md](./docs/concepts/prompt.md)
+11. [docs/concepts/scaffold.md](./docs/concepts/scaffold.md)
+12. [docs/concepts/verify.md](./docs/concepts/verify.md)
+13. [docs/decisions/README.md](./docs/decisions/README.md)
 
 ---
 
