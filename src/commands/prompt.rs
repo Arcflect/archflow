@@ -1,8 +1,9 @@
+use crate::cli::OutputMode;
 use crate::config::{ArtifactsPlanConfig, ContractConfig, PlacementRulesConfig};
 use crate::model::prompt::Prompt;
 use std::path::PathBuf;
 
-pub fn execute(target: &str) {
+pub fn execute(target: &str, mode: OutputMode) {
     let contract_path = if target.ends_with(".yaml") || target.ends_with(".yml") {
         PathBuf::from(target)
     } else {
@@ -74,7 +75,7 @@ pub fn execute(target: &str) {
     let prompt: Prompt = (&contract_config.contract).into();
 
     // Serialize to markdown
-    let output = prompt.format_markdown();
+    let output = prompt.format_markdown(mode);
 
     // Output cleanly to stdout
     println!("{}", output);
