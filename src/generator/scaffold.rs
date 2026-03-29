@@ -44,8 +44,8 @@ pub fn generate_artifact_with_sidecars(
     write_file_safely(
         &contract_path,
         &format!(
-            "# Contract template for: {}\n# Role: {}\n",
-            artifact.name, artifact.role
+            "name: {}\nmodule: {}\nrole: {}\nstatus: planned\nresponsibilities:\n  - TODO\nmust_not:\n  - TODO\n",
+            artifact.name, artifact.module, artifact.role
         ),
     )?;
 

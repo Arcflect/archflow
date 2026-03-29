@@ -80,7 +80,14 @@ impl From<&crate::model::contract::Contract> for Prompt {
 }
 
 impl Prompt {
-    pub fn format_markdown(&self) -> String {
+    pub fn format_markdown(&self, mode: crate::cli::OutputMode) -> String {
+        match mode {
+            crate::cli::OutputMode::Standard => self.format_standard(),
+            crate::cli::OutputMode::Compact => self.format_compact(),
+        }
+    }
+
+    fn format_standard(&self) -> String {
         let mut out = String::new();
         out.push_str(&format!("# Artifact Prompt: {}\n\n", self.artifact_name));
         out.push_str(&format!(
@@ -149,6 +156,63 @@ impl Prompt {
         if let Some(criteria) = &self.completion_criteria {
             if !criteria.is_empty() {
                 out.push_str("## Completion criteria\n");
+                for c in criteria {
+                    out.push_str(&format!("- {}\n", c));
+                }
+                out.push('\n');
+            }
+        }
+
+        out
+    }
+
+    fn format_compact(&self) -> String {
+        let mut out = String::new();
+        out.push_str(&format!("**Artifact:** `{}` (Role: `{}`, Module: `{}`)\n\n", self.artifact_name, self.role, self.module));
+
+        if !self.responsibilities.is_empty() {
+            out.push_str("**Responsibilities:**\n");
+            for r in &self.responsibilities {
+                out.push_str(&format!("- {}\n", r));
+            }
+            out.push('\n');
+        }
+
+        if !self.must_not.is_empty() {
+            out.push_str("**Must Not:**\n");
+            for m in &self.must_not {
+                out.push_str(&format!("- {}\n", m));
+            }
+            out.push('\n');
+        }
+
+        if let Some(deps) = &self.allowed_dependencies {
+            if !deps.is_empty() {
+                out.push_str(&format!("**Dependencies Allowed:** {}\n\n", deps.join(", ")));
+            }
+        }
+
+        if let Some(deps) = &self.forbidden_dependencies {
+            if !deps.is_empty() {
+                out.push_str(&format!("**Forbidden Dependencies:** {}\n\n", deps.join(", ")));
+            }
+        }
+
+        if let Some(inputs) = &self.inputs {
+            if !inputs.is_empty() {
+                out.push_str(&format!("**Inputs:** {}\n\n", inputs.join(", ")));
+            }
+        }
+
+        if let Some(outputs) = &self.outputs {
+            if !outputs.is_empty() {
+                out.push_str(&format!("**Outputs:** {}\n\n", outputs.join(", ")));
+            }
+        }
+
+        if let Some(criteria) = &self.completion_criteria {
+            if !criteria.is_empty() {
+                out.push_str("**Completion Criteria:**\n");
                 for c in criteria {
                     out.push_str(&format!("- {}\n", c));
                 }

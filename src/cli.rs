@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
 
 #[derive(Parser)]
 #[command(author = "hirontan", version, about, long_about = None)]
@@ -6,6 +6,22 @@ use clap::{Parser, Subcommand};
 pub struct Cli {
     #[command(subcommand)]
     pub command: Commands,
+}
+
+#[derive(Clone, Debug, Default, ValueEnum)]
+pub enum OutputMode {
+    #[default]
+    Standard,
+    Compact,
+}
+
+impl std::fmt::Display for OutputMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OutputMode::Standard => write!(f, "standard"),
+            OutputMode::Compact => write!(f, "compact"),
+        }
+    }
 }
 
 #[derive(Subcommand)]
@@ -20,5 +36,8 @@ pub enum Commands {
     Prompt {
         /// The artifact name or path to the .contract.yaml file
         target: String,
+        /// The format required for the output
+        #[arg(short, long, default_value_t = OutputMode::Standard)]
+        mode: OutputMode,
     },
 }
