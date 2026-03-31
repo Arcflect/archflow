@@ -23,5 +23,8 @@ fn main() {
         Commands::Prompt { target, mode } => {
             commands::prompt::execute(&target, mode);
         }
+        Commands::Verify => {
+            commands::verify::execute();
+        }
     }
 }
