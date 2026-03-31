@@ -40,4 +40,6 @@ pub enum Commands {
         #[arg(short, long, default_value_t = OutputMode::Standard)]
         mode: OutputMode,
     },
+    /// Verify the consistency of project structure and artifact contracts
+    Verify,
 }
