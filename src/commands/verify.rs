@@ -1,6 +1,7 @@
 use crate::config::{ArtifactsPlanConfig, ContractConfig, PlacementRulesConfig, ProjectConfig};
 use crate::model::contract_validation;
 use crate::model::prompt_validation;
+use crate::model::status_validation;
 use crate::model::verify::{CheckResult, VerifyReport, VerifyStatus, VerifyTarget};
 use std::collections::HashSet;
 use std::fs;
@@ -32,6 +33,12 @@ pub fn execute() {
         println!();
 
         for artifact in &artifacts.artifacts {
+            // Check artifact status validity
+            results.push(status_validation::validate_artifact_status(
+                &artifact.name,
+                artifact.status.as_deref(),
+            ));
+
             // Check: role consistency (role-defined + role-path-match)
             let (role_checks, role_found) =
                 check_role_consistency(&artifact.name, &artifact.role, artifact.path.as_deref(), &placement);
@@ -116,6 +123,22 @@ pub fn execute() {
                                         ),
                                     });
                                 }
+
+                                // Check contract status validity and artifact-contract status consistency
+                                let contract_path_str = contract_path.to_string_lossy().to_string();
+                                results.push(status_validation::validate_contract_status(
+                                    &artifact.name,
+                                    &contract_path_str,
+                                    Some(c.status.as_str()),
+                                ));
+                                results.push(
+                                    status_validation::validate_artifact_contract_status_consistency(
+                                        &artifact.name,
+                                        artifact.status.as_deref(),
+                                        &contract_path_str,
+                                        Some(c.status.as_str()),
+                                    ),
+                                );
                             }
                             Err(e) => {
                                 results.push(CheckResult {
