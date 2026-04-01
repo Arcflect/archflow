@@ -149,6 +149,7 @@ The initial set of decisions focuses on core Archflow direction:
 - `0011` Minimal verification model
 - `0012` Minimal error handling policy for Phase 4 verification
 - `0013` First-version verification rule boundaries
+- `0014` Guard contract-first and sidecar-first behavior in Phase 4 verification
 
 These decisions establish the early shape of the project.
 
@@ -313,6 +314,7 @@ Archflow は概念が多いプロジェクトです。
 - `0011` 最小限の verification モデル
 - `0012` Phase 4 verification における最小エラーハンドリングポリシー
 - `0013` 初版 verification ルール境界
+- `0014` Phase 4 verification における contract-first および sidecar-first 挙動の保護
 
 これらの決定はプロジェクトの初期形状を確立します。
 
