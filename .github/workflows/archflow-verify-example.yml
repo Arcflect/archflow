@@ -1,0 +1,35 @@
+name: Archflow Verify Example
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "schemas/**"
+      - "examples/**"
+      - ".github/workflows/archflow-verify-example.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example_dir:
+          - examples/minimal/archflow
+          - examples/generic-layered/archflow
+          - examples/rust-clean-hexagonal/archflow
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run archflow verify (${{ matrix.example_dir }})
+        working-directory: ${{ matrix.example_dir }}
+        run: cargo run --manifest-path ../../../Cargo.toml -- verify
