@@ -86,6 +86,12 @@ This example runs `archflow verify` for each bundled example fixture:
 - `examples/generic-layered/archflow`
 - `examples/rust-clean-hexagonal/archflow`
 
+Each matrix run also uploads the execution log as a workflow artifact:
+
+- `archflow-verify-log-examples-minimal-archflow`
+- `archflow-verify-log-examples-generic-layered-archflow`
+- `archflow-verify-log-examples-rust-clean-hexagonal-archflow`
+
 Core command pattern used in CI:
 
 ```bash
