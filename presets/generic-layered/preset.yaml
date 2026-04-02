@@ -1,0 +1,12 @@
+name: generic-layered
+summary: Language-agnostic layered starter preset for Archflow
+architecture_style: layered
+ecosystem: generic
+source_example: examples/generic-layered
+includes:
+  required:
+    - project.arch.yaml
+    - placement.rules.yaml
+    - contracts.template.yaml
+  optional:
+    - artifacts.plan.yaml

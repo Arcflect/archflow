@@ -123,6 +123,10 @@ Best for:
 - layered architecture users
 - teams exploring Archflow before choosing a language-specific preset
 
+Preset path:
+
+- `presets/generic-layered/`
+
 Directory focus:
 
 - `src/domain/`
