@@ -107,4 +107,13 @@ pub enum Commands {
         #[arg(long)]
         strict: bool,
     },
+    /// Verify contract-first and sidecar-first alignment of a preset directory
+    PresetVerify {
+        /// Preset directory to verify (e.g. presets/generic-layered)
+        #[arg(long, default_value = ".")]
+        preset_dir: String,
+        /// Treat warnings as failures (exit code 1)
+        #[arg(long)]
+        strict: bool,
+    },
 }

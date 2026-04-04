@@ -118,7 +118,10 @@ cargo run -- fix --dry-run
 Prototype preset registry workflow:
 
 ```bash
-# Publish local preset package into local registry index
+# Verify preset contract-first and sidecar-first alignment before publishing
+cargo run -- preset-verify --preset-dir presets/generic-layered
+
+# Publish local preset package into local registry index (alignment check runs automatically)
 cargo run -- preset-publish --preset-dir presets/generic-layered --registry-dir .archflow/registry
 
 # Install latest compatible preset from local registry index

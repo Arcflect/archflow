@@ -183,6 +183,7 @@ This packaging keeps the preset:
 
 Archflow Phase 8 introduces a prototype local registry workflow.
 
+- verify: `archflow preset-verify --preset-dir presets/<preset-id>` — check alignment before publishing
 - publish: `archflow preset-publish --preset-dir presets/<preset-id> --registry-dir .archflow/registry`
 - install: `archflow preset-install --preset <preset-id> --registry-dir .archflow/registry --destination-dir presets`
 
@@ -196,6 +197,33 @@ Validation gates include:
 - manifest identity and required include files
 - package/compatibility version format checks
 - compatibility checks at install time
+- contract-first and sidecar-first alignment checks (run automatically on publish)
+
+## Preset alignment verification
+
+The `preset-verify` command checks that presets remain anchored to Archflow's core philosophy and do not collapse into simple directory templates without architectural meaning.
+
+**Contract-first checks** confirm that the preset enforces contract-driven design:
+
+- `contracts.template.yaml` must appear in `includes.required` (not just optional)
+- `contracts.template.yaml` must define at least one non-empty `role_templates` entry
+- each `role_templates` entry should carry `responsibilities`
+- every placement role should have a matching entry in `role_templates`
+
+**Sidecar-first checks** confirm that sidecar outputs remain first-class:
+
+- `guard.sidecar.yaml` should be included in the preset
+- guard's CI hook must be enabled
+- `require_contracts_template` and `enforce_sidecar_suffixes` checks must be active
+- every placement role should define `file_extension` to allow sidecar suffix resolution
+
+Run alignment verification manually:
+
+```bash
+archflow preset-verify --preset-dir presets/generic-layered
+```
+
+Preset alignment errors block `preset-publish`; warnings are reported but do not block the publish.
 
 ### How preset files relate to the model
 

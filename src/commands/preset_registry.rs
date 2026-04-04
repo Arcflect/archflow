@@ -1,3 +1,4 @@
+use crate::commands::preset_verify;
 use crate::config::policy::SUPPORTED_POLICY_PROFILE_VERSION;
 use crate::config::project::SUPPORTED_PROJECT_SCHEMA_VERSION;
 use serde::{Deserialize, Serialize};
@@ -76,6 +77,19 @@ pub fn publish(preset_dir: &str, registry_dir: &str) {
             std::process::exit(1);
         }
     };
+
+    // Run contract-first and sidecar-first alignment checks before publishing.
+    let alignment_report = preset_verify::run_alignment_check(&preset_dir_path);
+    if !alignment_report.findings.is_empty() {
+        preset_verify::render_report(&alignment_report);
+        if alignment_report.has_errors() {
+            eprintln!(
+                "[!] preset alignment check failed; resolve errors before publishing"
+            );
+            std::process::exit(1);
+        }
+        println!();
+    }
 
     if let Err(err) = fs::create_dir_all(&registry_dir_path) {
         eprintln!(
