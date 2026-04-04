@@ -52,4 +52,10 @@ pub enum Commands {
     },
     /// Verify the consistency of project structure and artifact contracts
     Verify,
+    /// Audit baseline architecture compliance checks for PR gate usage
+    Audit {
+        /// Treat warnings as failures (exit code 1)
+        #[arg(long)]
+        strict: bool,
+    },
 }

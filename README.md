@@ -103,6 +103,12 @@ Preview before writing files:
 cargo run -- init --preset generic-layered --project-name my-service --dry-run
 ```
 
+Run baseline audit checks (strict mode fails on warnings):
+
+```bash
+cargo run -- audit --strict
+```
+
 Onboarding e2e check script:
 
 ```bash
@@ -137,6 +143,7 @@ Core concepts:
 
 Usage:
 - [docs/usage.md](./docs/usage.md)
+- [`.github/workflows/archflow-audit-pr-gate.yml`](./.github/workflows/archflow-audit-pr-gate.yml)
 
 Schema drafts:
 - [schemas/project.schema.yaml](./schemas/project.schema.yaml)

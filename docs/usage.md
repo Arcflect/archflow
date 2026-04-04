@@ -174,6 +174,38 @@ introducing a full CI platform design.
 
 ---
 
+## PR Gate Example: `archflow audit --strict`
+
+Use the workflow file below as a baseline PR gate setup:
+
+- `.github/workflows/archflow-audit-pr-gate.yml`
+
+This example runs `archflow audit --strict` for each bundled example fixture:
+
+- `examples/minimal/archflow`
+- `examples/generic-layered/archflow`
+- `examples/rust-clean-hexagonal/archflow`
+
+Audit output includes rule-level diagnostics:
+
+- `rule_id`
+- `severity` (`error` or `warn`)
+- remediation hints
+
+Core command pattern used in CI:
+
+```bash
+cd examples/minimal/archflow
+cargo run --manifest-path ../../../Cargo.toml -- audit --strict
+```
+
+Expected behavior:
+
+- exit code `0`: no errors and no warnings
+- exit code `1`: at least one error, or warnings when `--strict` is enabled
+
+---
+
 ## Preset-Based Workflow Examples
 
 For small workflow examples aimed at preset-based repositories, see:
