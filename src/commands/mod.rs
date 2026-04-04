@@ -4,6 +4,7 @@ pub mod guard;
 pub mod init;
 pub mod plan;
 pub mod preset_registry;
+pub mod preset_verify;
 pub mod prompt;
 pub mod scaffold;
 pub mod verify;

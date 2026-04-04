@@ -63,5 +63,8 @@ fn main() {
             };
             commands::guard::execute_cli(hook_point, strict);
         }
+        Commands::PresetVerify { preset_dir, strict } => {
+            commands::preset_verify::execute_cli(&preset_dir, strict);
+        }
     }
 }

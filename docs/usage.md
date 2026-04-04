@@ -250,9 +250,43 @@ previews and exits non-zero so human review remains mandatory.
 
 ---
 
-## Preset Registry Prototype: `preset-publish` / `preset-install`
+## Preset Registry Prototype: `preset-publish` / `preset-install` / `preset-verify`
 
-Archflow provides a prototype local registry workflow for preset sharing.
+Archflow provides a prototype local registry workflow for preset sharing and alignment verification.
+
+### Verify preset alignment: `preset-verify`
+
+Before publishing or sharing a preset, verify that it preserves contract-first and sidecar-first behavior:
+
+```bash
+# Verify a preset directory
+cargo run -- preset-verify --preset-dir presets/generic-layered
+
+# Fail on warnings as well as errors
+cargo run -- preset-verify --preset-dir presets/generic-layered --strict
+```
+
+**Contract-first checks:**
+
+| Rule ID | Severity | Description |
+|---------|----------|-------------|
+| `preset-contracts-template-in-required` | error | `contracts.template.yaml` must be in `includes.required`, not optional |
+| `preset-placement-rules-in-required` | error | `placement.rules.yaml` must be in `includes.required` |
+| `preset-contracts-template-has-role-templates` | error | `contracts.template.yaml` must define at least one `role_templates` entry |
+| `preset-role-template-has-responsibilities` | warn | Each role template should define at least one responsibility |
+| `preset-placement-role-in-template` | warn | Each placement role should have a matching `role_templates` entry in `contracts.template.yaml` |
+
+**Sidecar-first checks:**
+
+| Rule ID | Severity | Description |
+|---------|----------|-------------|
+| `preset-guard-sidecar-present` | warn | `guard.sidecar.yaml` should appear in preset includes |
+| `preset-guard-ci-hook-enabled` | warn | `hooks.ci` must be `true` in `guard.sidecar.yaml` |
+| `preset-guard-checks-require-contracts-template` | warn | `checks.require_contracts_template` must be `true` |
+| `preset-guard-checks-enforce-sidecar-suffixes` | warn | `checks.enforce_sidecar_suffixes` must be `true` |
+| `preset-placement-file-extension-present` | warn | Each placement role should define `file_extension` for sidecar suffix resolution |
+
+These checks are also run automatically during `preset-publish`. A publish attempt with alignment errors will be rejected.
 
 ### Publish a preset package
 
@@ -267,6 +301,7 @@ Publish validation checks:
 - `package.visibility` must be `public` or `private`
 - required includes must contain and resolve to existing files
 - duplicate `(id, version)` entries are rejected
+- contract-first and sidecar-first alignment checks run automatically (errors block publish, warnings are reported)
 
 ### Install a preset package
 
