@@ -241,6 +241,63 @@ Preset alignment errors block `preset-publish`; warnings are reported but do not
 
 ---
 
+## Preset versioning and migration
+
+Archflow Phase 9 introduces versioned preset migration tooling to support controlled upgrades while preserving architecture guarantees.
+
+### Migration plan
+
+The `preset-migration-plan` command compares a project's current configuration files against a target preset version and classifies every file change:
+
+- **add** — new file from the target preset (safe to apply automatically)
+- **update** — preset changed the file and the local copy matches the old preset (safe to apply automatically)
+- **conflict** — the project diverged from the old preset, or the file is new in the target but already exists locally (requires manual merge)
+- **unchanged** — no changes between the two preset versions
+
+```bash
+archflow preset-migration-plan \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry
+```
+
+All actionable steps include a patch preview for review. The command exits with code 1 if conflicts are present so CI pipelines can detect upgrade risks early.
+
+### Migration apply
+
+The `preset-migration-apply` command applies the safe steps from the migration plan:
+
+- `add` and `update` steps are applied automatically
+- `conflict` steps are **never** auto-applied
+- Before overwriting any existing file, Archflow backs it up to `.archflow/migration-backup/<from-version>/` so upgrades are fully reversible
+
+```bash
+archflow preset-migration-apply \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry
+
+# Dry run only
+archflow preset-migration-apply \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry \
+  --dry-run
+```
+
+### Compatibility rules
+
+Preset versioning follows semver. The migration tooling enforces:
+
+- `to_version` must be strictly greater than `from_version`
+- both versions must exist as packages in the registry index
+- conflicts require explicit manual resolution — auto-magic transformations are deliberately avoided
+
+---
+
 ## Minimal bootstrap flow from presets
 
 Preset-based startup should be aligned with `archflow init`.

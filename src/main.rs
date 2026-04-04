@@ -66,5 +66,37 @@ fn main() {
         Commands::PresetVerify { preset_dir, strict } => {
             commands::preset_verify::execute_cli(&preset_dir, strict);
         }
+        Commands::PresetMigrationPlan {
+            preset,
+            from_version,
+            to_version,
+            registry_dir,
+            project_dir,
+        } => {
+            commands::preset_migrate::execute_plan_cli(
+                &preset,
+                &from_version,
+                &to_version,
+                &registry_dir,
+                &project_dir,
+            );
+        }
+        Commands::PresetMigrationApply {
+            preset,
+            from_version,
+            to_version,
+            registry_dir,
+            project_dir,
+            dry_run,
+        } => {
+            commands::preset_migrate::execute_apply_cli(
+                &preset,
+                &from_version,
+                &to_version,
+                &registry_dir,
+                &project_dir,
+                dry_run,
+            );
+        }
     }
 }

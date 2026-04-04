@@ -131,6 +131,24 @@ cargo run -- preset-install --preset generic-layered --registry-dir .archflow/re
 cargo run -- guard --hook ci --strict
 ```
 
+Preset versioning and migration workflow:
+
+```bash
+# Generate a migration plan (patch previews + conflict detection)
+cargo run -- preset-migration-plan \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry
+
+# Apply safe changes (backups created automatically; conflicts never auto-applied)
+cargo run -- preset-migration-apply \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry
+```
+
 Onboarding e2e check script:
 
 ```bash

@@ -361,6 +361,64 @@ Fallback behavior when guard rules are unavailable:
 
 ---
 
+## Preset Migration: `preset-migration-plan` / `preset-migration-apply`
+
+Archflow provides preset versioning and migration tooling to help projects upgrade to a newer preset version while preserving architecture guarantees and identifying conflicts early.
+
+### Generate a migration plan
+
+```bash
+cargo run -- preset-migration-plan \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry \
+  --project-dir .
+```
+
+The migration plan compares each file from the old preset version against the target and classifies every change:
+
+| Class | Meaning |
+|-------|---------|
+| `add` | File is new in the target preset and does not exist locally — safe to add |
+| `update` | File changed in the target preset and local copy matches the old preset — safe to overwrite |
+| `conflict` | File changed in both the project and the target preset, or is new in the target but already exists locally — manual review required |
+| `unchanged` | File is the same between preset versions — no action needed |
+
+The plan exits with code 1 if any conflicts are detected. All actionable steps include a patch preview.
+
+### Apply a migration plan
+
+```bash
+# Preview only (no files written)
+cargo run -- preset-migration-apply \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry \
+  --project-dir . \
+  --dry-run
+
+# Apply safe changes (add + update only; conflicts are never auto-applied)
+cargo run -- preset-migration-apply \
+  --preset generic-layered \
+  --from-version 0.1.0 \
+  --to-version 0.2.0 \
+  --registry-dir .archflow/registry \
+  --project-dir .
+```
+
+Apply behavior:
+
+- `add` and `update` steps are applied automatically
+- `conflict` steps are **never** auto-applied — they must be resolved manually
+- Before overwriting any existing file, a backup is created in `.archflow/migration-backup/<from-version>/`
+- **Rollback**: restore files from the backup directory if the migration result is unsatisfactory
+
+Apply aborts before writing anything if conflicts are present. Resolve conflicts first, then re-run apply.
+
+---
+
 ## Preset-Based Workflow Examples
 
 For small workflow examples aimed at preset-based repositories, see:
