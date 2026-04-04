@@ -149,6 +149,13 @@ cargo run -- preset-migration-apply \
   --registry-dir .archflow/registry
 ```
 
+Org/team override precedence:
+
+```bash
+# Show effective policy after applying org → team → project precedence chain
+cargo run -- policy-resolve
+```
+
 Onboarding e2e check script:
 
 ```bash

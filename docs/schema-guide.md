@@ -45,6 +45,7 @@ Archflow currently defines the following schema drafts:
 - `schemas/guard-sidecar.schema.yaml`
 - `schemas/preset-package.schema.yaml`
 - `schemas/preset-registry-index.schema.yaml`
+- `schemas/org-team-policy-layer.schema.yaml`
 
 Not all of these need to be written by a user directly.
 
