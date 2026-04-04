@@ -123,6 +123,9 @@ cargo run -- preset-publish --preset-dir presets/generic-layered --registry-dir 
 
 # Install latest compatible preset from local registry index
 cargo run -- preset-install --preset generic-layered --registry-dir .archflow/registry --destination-dir presets
+
+# Run sidecar guard checks (CI-style)
+cargo run -- guard --hook ci --strict
 ```
 
 Onboarding e2e check script:
@@ -169,6 +172,7 @@ Schema drafts:
 - [schemas/contract.schema.yaml](./schemas/contract.schema.yaml)
 - [schemas/prompt.schema.yaml](./schemas/prompt.schema.yaml)
 - [schemas/policy-profile.schema.yaml](./schemas/policy-profile.schema.yaml)
+- [schemas/guard-sidecar.schema.yaml](./schemas/guard-sidecar.schema.yaml)
 - [schemas/preset-package.schema.yaml](./schemas/preset-package.schema.yaml)
 - [schemas/preset-registry-index.schema.yaml](./schemas/preset-registry-index.schema.yaml)
 

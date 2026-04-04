@@ -42,6 +42,7 @@ Archflow currently defines the following schema drafts:
 - `schemas/contract.schema.yaml`
 - `schemas/prompt.schema.yaml`
 - `schemas/policy-profile.schema.yaml`
+- `schemas/guard-sidecar.schema.yaml`
 - `schemas/preset-package.schema.yaml`
 - `schemas/preset-registry-index.schema.yaml`
 

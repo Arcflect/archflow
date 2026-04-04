@@ -11,6 +11,7 @@ includes:
   optional:
     - artifacts.plan.yaml
     - policy.profile.yaml
+    - guard.sidecar.yaml
 
 package:
   version: 0.1.0

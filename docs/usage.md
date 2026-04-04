@@ -43,6 +43,7 @@ Generated files in current directory:
 - `contracts.template.yaml`
 - `artifacts.plan.yaml` (when included by the chosen preset)
 - `policy.profile.yaml`
+- `guard.sidecar.yaml`
 
 Behavior notes:
 
@@ -289,6 +290,39 @@ Registry index format:
 - registry root: `<registry-dir>`
 - index file: `<registry-dir>/index.yaml`
 - package files: `<registry-dir>/packages/<preset-id>/<version>/...`
+
+---
+
+## Sidecar Guard Checks: `archflow guard`
+
+Guard checks provide sidecar-first policy enforcement with hook points for:
+
+- `init`
+- `plan`
+- `ci`
+
+Run guard explicitly:
+
+```bash
+# CI-oriented enforcement (warnings fail in strict mode)
+cargo run -- guard --hook ci --strict
+
+# Local checks aligned with plan hook
+cargo run -- guard --hook plan
+```
+
+Diagnostics format is aligned with `audit` output:
+
+- `rule_id`
+- `severity` (`error` or `warn`)
+- `target`
+- remediation hint
+
+Fallback behavior when guard rules are unavailable:
+
+- if `guard.sidecar.yaml` is missing, guard emits `guard-rules-unavailable` as a warning
+- fallback defaults are applied automatically to keep checks running
+- if `guard.sidecar.yaml` exists but is invalid, guard still falls back and reports the warning
 
 ---
 

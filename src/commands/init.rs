@@ -40,6 +40,7 @@ pub fn execute(preset: Option<&str>, project_name: Option<&str>, dry_run: bool) 
 
   let mut generated_count = 0;
   let mut skipped_count = 0;
+  let planned_files: Vec<String> = actions.iter().map(|action| action.filename.clone()).collect();
 
   for action in actions {
     match action.kind {
@@ -81,6 +82,15 @@ pub fn execute(preset: Option<&str>, project_name: Option<&str>, dry_run: bool) 
     println!("  archflow scaffold");
   } else {
     println!("Initialization finished. No new configuration files were generated.");
+  }
+
+  let guard_report = crate::commands::guard::run_hook(
+    crate::commands::guard::GuardHookPoint::Init,
+    Some(&planned_files),
+  );
+  crate::commands::guard::render_report(&guard_report);
+  if guard_report.has_errors() {
+    std::process::exit(1);
   }
 }
 
@@ -204,6 +214,10 @@ modules:
             "policy.profile.yaml".to_string(),
             default_policy_profile_contents(),
         ),
+        (
+          "guard.sidecar.yaml".to_string(),
+          default_guard_sidecar_contents(),
+        ),
     ]
   }
 
@@ -223,6 +237,22 @@ naming:
 forbidden_dependencies: []
 
 overrides: []
+"#
+    .to_string()
+  }
+
+  fn default_guard_sidecar_contents() -> String {
+    r#"version: 1
+
+hooks:
+  init: true
+  plan: true
+  ci: true
+
+checks:
+  require_contracts_template: true
+  require_role_templates_for_artifact_roles: true
+  enforce_sidecar_suffixes: true
 "#
     .to_string()
   }
@@ -277,8 +307,9 @@ overrides: []
       files.push((filename.to_string(), contents));
     }
 
-    let optional = ["artifacts.plan.yaml", "policy.profile.yaml"];
+    let optional = ["artifacts.plan.yaml", "policy.profile.yaml", "guard.sidecar.yaml"];
     let mut has_policy_profile = false;
+    let mut has_guard_sidecar = false;
     for filename in optional {
       let source = preset_dir.join(filename);
       if source.exists() {
@@ -293,6 +324,9 @@ overrides: []
         if filename == "policy.profile.yaml" {
           has_policy_profile = true;
         }
+        if filename == "guard.sidecar.yaml" {
+          has_guard_sidecar = true;
+        }
       }
     }
 
@@ -300,6 +334,13 @@ overrides: []
       files.push((
         "policy.profile.yaml".to_string(),
         default_policy_profile_contents(),
+      ));
+    }
+
+    if !has_guard_sidecar {
+      files.push((
+        "guard.sidecar.yaml".to_string(),
+        default_guard_sidecar_contents(),
       ));
     }
 
@@ -513,7 +554,8 @@ mod tests {
         "placement.rules.yaml",
         "artifacts.plan.yaml",
         "contracts.template.yaml",
-        "policy.profile.yaml"
+        "policy.profile.yaml",
+        "guard.sidecar.yaml"
       ]
     );
     assert_eq!(actions[0].kind, InitActionKind::Create);

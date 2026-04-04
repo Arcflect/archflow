@@ -1,0 +1,54 @@
+schema:
+  name: guard-sidecar
+  version: 0.1.0
+  description: >
+    Defines sidecar guard checks and hook points for runtime and CI enforcement.
+
+required:
+  - version
+  - hooks
+
+fields:
+  version:
+    type: integer
+    required: true
+    description: Supported guard sidecar schema version. Current value: 1.
+
+  hooks:
+    type: map
+    required: true
+    fields:
+      init:
+        type: boolean
+        required: true
+      plan:
+        type: boolean
+        required: true
+      ci:
+        type: boolean
+        required: true
+
+  checks:
+    type: map
+    required: false
+    fields:
+      require_contracts_template:
+        type: boolean
+        required: false
+      require_role_templates_for_artifact_roles:
+        type: boolean
+        required: false
+      enforce_sidecar_suffixes:
+        type: boolean
+        required: false
+
+example:
+  version: 1
+  hooks:
+    init: true
+    plan: true
+    ci: true
+  checks:
+    require_contracts_template: true
+    require_role_templates_for_artifact_roles: true
+    enforce_sidecar_suffixes: true

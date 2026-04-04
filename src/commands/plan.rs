@@ -1,6 +1,9 @@
 use crate::config::{ArtifactsPlanConfig, PlacementRulesConfig, ProjectConfig};
 
 pub fn execute() {
+    let guard_report = crate::commands::guard::run_hook(crate::commands::guard::GuardHookPoint::Plan, None);
+    crate::commands::guard::render_report(&guard_report);
+
     let project_config = match ProjectConfig::load("project.arch.yaml") {
         Ok(config) => config,
         Err(e) => {
@@ -25,9 +28,13 @@ pub fn execute() {
         }
     };
 
-    let (lines, error_count) = build_plan_output(&project_config, &placement_config, &artifacts_config);
+    let (lines, mut error_count) = build_plan_output(&project_config, &placement_config, &artifacts_config);
     for line in lines {
         println!("{}", line);
+    }
+
+    if guard_report.has_errors() {
+        error_count += 1;
     }
 
     if error_count > 0 {
