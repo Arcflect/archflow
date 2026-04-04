@@ -3,6 +3,7 @@ pub mod fix;
 pub mod guard;
 pub mod init;
 pub mod plan;
+pub mod preset_migrate;
 pub mod preset_registry;
 pub mod preset_verify;
 pub mod prompt;

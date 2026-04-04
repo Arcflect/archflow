@@ -116,4 +116,43 @@ pub enum Commands {
         #[arg(long)]
         strict: bool,
     },
+    /// Generate a migration plan to upgrade a preset version
+    PresetMigrationPlan {
+        /// Preset id to migrate
+        #[arg(long)]
+        preset: String,
+        /// Version currently used in the project
+        #[arg(long)]
+        from_version: String,
+        /// Target preset version to migrate to
+        #[arg(long)]
+        to_version: String,
+        /// Local registry root directory
+        #[arg(long, default_value = ".archflow/registry")]
+        registry_dir: String,
+        /// Project directory to compare (defaults to current directory)
+        #[arg(long, default_value = ".")]
+        project_dir: String,
+    },
+    /// Apply a migration plan to upgrade a preset version
+    PresetMigrationApply {
+        /// Preset id to migrate
+        #[arg(long)]
+        preset: String,
+        /// Version currently used in the project
+        #[arg(long)]
+        from_version: String,
+        /// Target preset version to migrate to
+        #[arg(long)]
+        to_version: String,
+        /// Local registry root directory
+        #[arg(long, default_value = ".archflow/registry")]
+        registry_dir: String,
+        /// Project directory to apply migration into
+        #[arg(long, default_value = ".")]
+        project_dir: String,
+        /// Preview changes without writing any files
+        #[arg(long)]
+        dry_run: bool,
+    },
 }
