@@ -155,4 +155,16 @@ pub enum Commands {
         #[arg(long)]
         dry_run: bool,
     },
+    /// Show the effective policy after applying org/team/project override precedence
+    PolicyResolve {
+        /// Path to org-level policy file (default: .archflow/org.policy.yaml)
+        #[arg(long)]
+        org_policy: Option<String>,
+        /// Path to team-level policy file (default: .archflow/team.policy.yaml)
+        #[arg(long)]
+        team_policy: Option<String>,
+        /// Path to project-level policy file (default: policy.profile.yaml)
+        #[arg(long)]
+        project_policy: Option<String>,
+    },
 }

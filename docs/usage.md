@@ -419,6 +419,87 @@ Apply aborts before writing anything if conflicts are present. Resolve conflicts
 
 ---
 
+## Org/Team Override Precedence Model: `policy-resolve`
+
+Archflow implements a three-level policy override precedence chain:
+
+```
+org  →  team  →  project  →  default
+(highest priority)      (lowest priority)
+```
+
+Each level contributes overrides, naming rules, forbidden-dependency policies, and required-file
+requirements. The effective policy used by `archflow audit` is computed from all available layers.
+
+### Layer files
+
+| Level | Default path | Notes |
+|-------|--------------|-------|
+| org | `.archflow/org.policy.yaml` | Applies to all repositories in the organisation |
+| team | `.archflow/team.policy.yaml` | Applies to all repositories owned by the team |
+| project | `policy.profile.yaml` | Repository-local overrides (existing format) |
+
+### Locking rules
+
+Org and team layers can lock specific audit rules to prevent lower-priority layers from overriding them:
+
+```yaml
+# .archflow/org.policy.yaml
+version: 1
+label: acme-org
+locked_rules:
+  - module-name-policy
+  - artifact-name-policy
+overrides: []
+```
+
+A project override for a locked rule is silently ignored. Run `policy-resolve` to see which rules are locked.
+
+### Show effective policy
+
+```bash
+# Use standard lookup paths automatically
+cargo run -- policy-resolve
+
+# Specify explicit paths for each layer (useful in CI or multi-tenant setups)
+cargo run -- policy-resolve \
+  --org-policy .archflow/org.policy.yaml \
+  --team-policy .archflow/team.policy.yaml \
+  --project-policy policy.profile.yaml
+```
+
+Output includes:
+- Precedence chain
+- Locked rules and their source level
+- Effective naming rules with source attribution
+- Union of all required files and where each comes from
+- Effective overrides (deduplicated by rule_id + target; highest level wins)
+- Summary of which rules cannot be overridden at project level
+
+### Resolution rules
+
+| Dimension | Resolution strategy |
+|-----------|-------------------|
+| Naming rules | Highest-priority level that defines naming wins |
+| Required files | Union of all levels (additive) |
+| Forbidden dependencies | Highest-priority level wins per role |
+| Overrides | Highest-priority level wins per (rule_id, target) pair |
+| Locked rules | Union of org + team locked rules; project cannot lock |
+
+### Example: conflict behavior
+
+If both org and project try to override `module-name-policy` for `module:LegacyModule`:
+- org's entry wins (org has higher precedence)
+- only one resolved entry appears in the output
+- project's duplicate entry is discarded (not an error)
+
+If org locks `module-name-policy` and project tries to override it:
+- project's override is silently blocked
+- `policy-resolve` shows the locked rule alongside the constraint
+- audit respects the lock and applies the rule without exception
+
+---
+
 ## Preset-Based Workflow Examples
 
 For small workflow examples aimed at preset-based repositories, see:

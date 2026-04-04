@@ -1,5 +1,6 @@
 use crate::config::{
     ArtifactsPlanConfig, ContractConfig, PlacementRulesConfig, PolicyProfileConfig, ProjectConfig,
+    override_policy,
 };
 use crate::model::artifact::Artifact;
 use crate::model::placement::RolePlacement;
@@ -32,22 +33,23 @@ struct AuditFinding {
 pub fn execute(strict: bool) {
     let mut findings = Vec::new();
 
-    let policy_config = match PolicyProfileConfig::load_or_default("policy.profile.yaml") {
-        Ok(config) => config,
+    // Resolve effective policy by loading org/team/project layers in precedence order.
+    let effective_policy = match override_policy::load_effective_policy() {
+        Ok(ep) => ep,
         Err(err) => {
             findings.push(AuditFinding {
                 rule_id: "policy-profile-valid",
                 severity: Severity::Error,
                 target: "policy.profile.yaml".to_string(),
-                message: format!("policy profile is invalid: {}", err),
-                remediation:
-                    "Fix policy.profile.yaml or remove it to fallback to the minimum default policy profile."
-                        .to_string(),
+                message: format!("policy resolution failed: {}; hint: run `archflow policy-resolve` to diagnose", err),
+                remediation: "Fix the policy layer files identified by `archflow policy-resolve`."
+                    .to_string(),
             });
             render_report(&findings);
             std::process::exit(1);
         }
     };
+    let policy_config = effective_policy.to_policy_profile_config();
 
     for required_file in &policy_config.required_files {
         check_required_root_file(required_file, &mut findings, &policy_config);

@@ -1,0 +1,90 @@
+schema:
+  name: org-team-policy-layer
+  version: 0.1.0
+  description: >
+    Schema for org-level and team-level policy override layers.
+    Files are placed at .archflow/org.policy.yaml and .archflow/team.policy.yaml.
+
+required:
+  - version
+
+fields:
+  version:
+    type: integer
+    required: true
+    description: Policy layer schema version. Current supported value: 1.
+
+  label:
+    type: string
+    required: false
+    description: >
+      Human-readable label for this layer (e.g. organisation name or team name).
+      Used in policy-resolve diagnostics.
+
+  locked_rules:
+    type: list[string]
+    required: false
+    description: >
+      Rule IDs that lower-priority layers are not permitted to override.
+      Valid only at org and team levels; project-level locked_rules are ignored.
+    example:
+      - module-name-policy
+      - artifact-name-policy
+
+  naming:
+    type: map
+    required: false
+    description: >
+      Naming rules enforced by this layer. When set at org or team level,
+      lower-priority layers cannot change the naming rules.
+    fields:
+      module:
+        type: string
+        required: true
+        description: "Naming rule for module names. Supported: kebab-case, lowercase-identifier."
+      artifact:
+        type: string
+        required: true
+        description: "Naming rule for artifact names. Supported: kebab-case, lowercase-identifier."
+
+  required_files:
+    type: list[string]
+    required: false
+    description: >
+      Additional required files this layer mandates. These are unioned with
+      requirements from all other layers and the built-in minimum defaults.
+
+  forbidden_dependencies:
+    type: list[map]
+    required: false
+    description: >
+      Role-level forbidden dependency policies contributed by this layer.
+      The highest-priority layer that defines a policy for a given role wins.
+    item_fields:
+      role:
+        type: string
+        required: true
+      forbidden_entries:
+        type: list[string]
+        required: true
+
+  overrides:
+    type: list[map]
+    required: false
+    description: >
+      Override suppressions contributed by this layer.
+      Highest-priority level wins per (rule_id, target) pair.
+      Overrides for locked rules are silently ignored.
+    item_fields:
+      rule_id:
+        type: string
+        required: true
+        description: Audit rule id to override.
+      targets:
+        type: list[string]
+        required: true
+        description: Specific audit targets (e.g. module:LegacyModule) to suppress.
+      reason:
+        type: string
+        required: true
+        description: Mandatory justification for this override.

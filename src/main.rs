@@ -66,6 +66,17 @@ fn main() {
         Commands::PresetVerify { preset_dir, strict } => {
             commands::preset_verify::execute_cli(&preset_dir, strict);
         }
+        Commands::PolicyResolve {
+            org_policy,
+            team_policy,
+            project_policy,
+        } => {
+            commands::policy_resolve::execute_cli(
+                org_policy.as_deref(),
+                team_policy.as_deref(),
+                project_policy.as_deref(),
+            );
+        }
         Commands::PresetMigrationPlan {
             preset,
             from_version,

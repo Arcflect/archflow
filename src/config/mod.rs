@@ -9,6 +9,8 @@ pub mod project;
 pub use artifact::ArtifactsPlanConfig;
 pub use contract::ContractConfig;
 pub use guard::GuardSidecarConfig;
+pub use override_policy::EffectivePolicy;
 pub use placement::PlacementRulesConfig;
 pub use policy::PolicyProfileConfig;
 pub use project::ProjectConfig;
+pub mod override_policy;
