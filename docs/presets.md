@@ -118,6 +118,9 @@ The minimum metadata needed for a preset is:
 - `summary`: short explanation of what the preset is for
 - `architecture_style`: the architectural style the preset represents
 - `ecosystem`: the intended language or ecosystem target, or `generic`
+- `package.version`: preset package version for registry publish/install
+- `package.visibility`: `public` or `private`
+- `package.compatibility.*`: compatibility gates for archflow/schema support
 
 ### 2. Reusable defaults
 
@@ -173,6 +176,24 @@ This packaging keeps the preset:
 - easy to inspect
 - easy to load by path in a future CLI
 - independent from `examples/` at runtime
+
+## Prototype registry workflow
+
+Archflow Phase 8 introduces a prototype local registry workflow.
+
+- publish: `archflow preset-publish --preset-dir presets/<preset-id> --registry-dir .archflow/registry`
+- install: `archflow preset-install --preset <preset-id> --registry-dir .archflow/registry --destination-dir presets`
+
+Registry index format (prototype):
+
+- `.archflow/registry/index.yaml`
+- `.archflow/registry/packages/<preset-id>/<version>/...`
+
+Validation gates include:
+
+- manifest identity and required include files
+- package/compatibility version format checks
+- compatibility checks at install time
 
 ### How preset files relate to the model
 

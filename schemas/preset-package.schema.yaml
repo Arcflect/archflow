@@ -1,0 +1,105 @@
+schema:
+  name: preset-package
+  version: 0.1.0
+  description: >
+    Defines preset manifest metadata including package identity, visibility,
+    and compatibility constraints for registry publish/install workflow.
+
+required:
+  - name
+  - summary
+  - architecture_style
+  - ecosystem
+  - includes
+  - package
+
+fields:
+  name:
+    type: string
+    required: true
+    description: Stable preset id (lowercase kebab-case).
+  summary:
+    type: string
+    required: true
+    description: Human-readable short description of this preset.
+  architecture_style:
+    type: string
+    required: true
+    description: Architectural style represented by this preset.
+  ecosystem:
+    type: string
+    required: true
+    description: Target ecosystem (generic, rust, etc.).
+  source_example:
+    type: string
+    required: false
+    description: Optional reference to originating example path.
+
+  includes:
+    type: map
+    required: true
+    fields:
+      required:
+        type: list[string]
+        required: true
+        description: Files that must exist for preset packaging.
+      optional:
+        type: list[string]
+        required: false
+        description: Optional files bundled when present.
+
+  package:
+    type: map
+    required: true
+    fields:
+      version:
+        type: string
+        required: true
+        description: Preset package version (semver x.y.z).
+      visibility:
+        type: string
+        required: true
+        description: Package visibility. Supported values: public, private.
+      compatibility:
+        type: map
+        required: true
+        fields:
+          min_archflow_version:
+            type: string
+            required: true
+            description: Minimum supported archflow version.
+          max_archflow_version:
+            type: string
+            required: true
+            description: Maximum supported archflow version.
+          project_schema_version:
+            type: string
+            required: true
+            description: Required project schema version.
+          policy_profile_version:
+            type: integer
+            required: true
+            description: Required policy profile version.
+
+example:
+  name: generic-layered
+  summary: Language-agnostic layered starter preset for Archflow
+  architecture_style: layered
+  ecosystem: generic
+  source_example: examples/generic-layered
+  includes:
+    required:
+      - project.arch.yaml
+      - placement.rules.yaml
+      - contracts.template.yaml
+    optional:
+      - artifacts.plan.yaml
+      - policy.profile.yaml
+  package:
+    version: 0.1.0
+    visibility: public
+    compatibility:
+      min_archflow_version: 0.1.0
+      max_archflow_version: 0.1.99
+      project_schema_version: "1"
+      policy_profile_version: 1

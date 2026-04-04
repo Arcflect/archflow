@@ -1,0 +1,79 @@
+schema:
+  name: preset-registry-index
+  version: 0.1.0
+  description: >
+    Defines local preset registry index format used by prototype publish/install workflow.
+
+required:
+  - version
+  - presets
+
+fields:
+  version:
+    type: integer
+    required: true
+    description: Registry index format version. Current value: 1.
+
+  presets:
+    type: list[map]
+    required: true
+    description: Published preset package entries.
+    item_fields:
+      id:
+        type: string
+        required: true
+        description: Preset id.
+      version:
+        type: string
+        required: true
+        description: Preset package version.
+      visibility:
+        type: string
+        required: true
+        description: Visibility flag. Supported values: public, private.
+      summary:
+        type: string
+        required: true
+        description: Summary copied from preset manifest.
+      architecture_style:
+        type: string
+        required: true
+      ecosystem:
+        type: string
+        required: true
+      compatibility:
+        type: map
+        required: true
+        fields:
+          min_archflow_version:
+            type: string
+            required: true
+          max_archflow_version:
+            type: string
+            required: true
+          project_schema_version:
+            type: string
+            required: true
+          policy_profile_version:
+            type: integer
+            required: true
+      package_path:
+        type: string
+        required: true
+        description: Relative path from registry root to packaged preset files.
+
+example:
+  version: 1
+  presets:
+    - id: generic-layered
+      version: 0.1.0
+      visibility: public
+      summary: Language-agnostic layered starter preset for Archflow
+      architecture_style: layered
+      ecosystem: generic
+      compatibility:
+        min_archflow_version: 0.1.0
+        max_archflow_version: 0.1.99
+        project_schema_version: "1"
+        policy_profile_version: 1
+      package_path: packages/generic-layered/0.1.0

@@ -10,3 +10,13 @@ includes:
     - contracts.template.yaml
   optional:
     - artifacts.plan.yaml
+    - policy.profile.yaml
+
+package:
+  version: 0.1.0
+  visibility: public
+  compatibility:
+    min_archflow_version: 0.1.0
+    max_archflow_version: 0.1.99
+    project_schema_version: "1"
+    policy_profile_version: 1
