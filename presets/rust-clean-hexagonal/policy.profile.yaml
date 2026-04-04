@@ -1,0 +1,15 @@
+version: 1
+
+required_files:
+  - project.arch.yaml
+  - placement.rules.yaml
+  - artifacts.plan.yaml
+  - contracts.template.yaml
+
+naming:
+  module: lowercase-identifier
+  artifact: lowercase-identifier
+
+forbidden_dependencies: []
+
+overrides: []

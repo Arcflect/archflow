@@ -67,4 +67,28 @@ pub enum Commands {
         #[arg(long)]
         apply: bool,
     },
+    /// Publish a preset package into a local registry index
+    PresetPublish {
+        /// Preset directory path (e.g. presets/generic-layered)
+        #[arg(long)]
+        preset_dir: String,
+        /// Local registry root directory
+        #[arg(long, default_value = ".archflow/registry")]
+        registry_dir: String,
+    },
+    /// Install a preset package from a local registry index
+    PresetInstall {
+        /// Preset id to install
+        #[arg(long)]
+        preset: String,
+        /// Optional explicit version (defaults to latest compatible)
+        #[arg(long = "preset-version")]
+        preset_version: Option<String>,
+        /// Local registry root directory
+        #[arg(long, default_value = ".archflow/registry")]
+        registry_dir: String,
+        /// Destination directory to install into
+        #[arg(long, default_value = "presets")]
+        destination_dir: String,
+    },
 }

@@ -115,6 +115,16 @@ Preview conservative remediation candidates:
 cargo run -- fix --dry-run
 ```
 
+Prototype preset registry workflow:
+
+```bash
+# Publish local preset package into local registry index
+cargo run -- preset-publish --preset-dir presets/generic-layered --registry-dir .archflow/registry
+
+# Install latest compatible preset from local registry index
+cargo run -- preset-install --preset generic-layered --registry-dir .archflow/registry --destination-dir presets
+```
+
 Onboarding e2e check script:
 
 ```bash
@@ -159,6 +169,8 @@ Schema drafts:
 - [schemas/contract.schema.yaml](./schemas/contract.schema.yaml)
 - [schemas/prompt.schema.yaml](./schemas/prompt.schema.yaml)
 - [schemas/policy-profile.schema.yaml](./schemas/policy-profile.schema.yaml)
+- [schemas/preset-package.schema.yaml](./schemas/preset-package.schema.yaml)
+- [schemas/preset-registry-index.schema.yaml](./schemas/preset-registry-index.schema.yaml)
 
 Recommended reading order:
 1. [examples/README.md](./examples/README.md)

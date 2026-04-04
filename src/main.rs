@@ -36,5 +36,24 @@ fn main() {
         Commands::Fix { dry_run, apply } => {
             commands::fix::execute(dry_run, apply);
         }
+        Commands::PresetPublish {
+            preset_dir,
+            registry_dir,
+        } => {
+            commands::preset_registry::publish(&preset_dir, &registry_dir);
+        }
+        Commands::PresetInstall {
+            preset,
+            preset_version,
+            registry_dir,
+            destination_dir,
+        } => {
+            commands::preset_registry::install(
+                &preset,
+                preset_version.as_deref(),
+                &registry_dir,
+                &destination_dir,
+            );
+        }
     }
 }

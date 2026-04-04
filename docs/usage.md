@@ -249,6 +249,49 @@ previews and exits non-zero so human review remains mandatory.
 
 ---
 
+## Preset Registry Prototype: `preset-publish` / `preset-install`
+
+Archflow provides a prototype local registry workflow for preset sharing.
+
+### Publish a preset package
+
+```bash
+cargo run -- preset-publish --preset-dir presets/generic-layered --registry-dir .archflow/registry
+```
+
+Publish validation checks:
+
+- `preset.yaml` must parse and `name` must match directory name
+- `package.version` and compatibility versions must be semver (`x.y.z`)
+- `package.visibility` must be `public` or `private`
+- required includes must contain and resolve to existing files
+- duplicate `(id, version)` entries are rejected
+
+### Install a preset package
+
+```bash
+# latest compatible version
+cargo run -- preset-install --preset generic-layered --registry-dir .archflow/registry --destination-dir presets
+
+# explicit version
+cargo run -- preset-install --preset generic-layered --preset-version 0.1.0 --registry-dir .archflow/registry --destination-dir presets
+```
+
+Install validation checks:
+
+- preset id/version must exist in registry index
+- compatibility range must include current Archflow version
+- project/policy schema compatibility must match current runtime support
+- destination preset directory must not already exist
+
+Registry index format:
+
+- registry root: `<registry-dir>`
+- index file: `<registry-dir>/index.yaml`
+- package files: `<registry-dir>/packages/<preset-id>/<version>/...`
+
+---
+
 ## Preset-Based Workflow Examples
 
 For small workflow examples aimed at preset-based repositories, see:
