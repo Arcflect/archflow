@@ -386,17 +386,28 @@ mod tests {
   use serde_yaml::Value;
   use std::env;
   use std::fs;
+  use std::sync::{Mutex, MutexGuard, OnceLock};
   use tempfile::tempdir;
 
+  fn cwd_test_lock() -> &'static Mutex<()> {
+    static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
+    LOCK.get_or_init(|| Mutex::new(()))
+  }
+
   struct CurrentDirGuard {
+    _lock: MutexGuard<'static, ()>,
     original: std::path::PathBuf,
   }
 
   impl CurrentDirGuard {
     fn set_to(path: &std::path::Path) -> Self {
+      let lock = cwd_test_lock().lock().expect("cwd lock should be acquirable");
       let original = env::current_dir().expect("current dir should resolve");
       env::set_current_dir(path).expect("current dir should be changed for test");
-      Self { original }
+      Self {
+        _lock: lock,
+        original,
+      }
     }
   }
 

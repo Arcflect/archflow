@@ -30,5 +30,8 @@ fn main() {
         Commands::Verify => {
             commands::verify::execute();
         }
+        Commands::Audit { strict } => {
+            commands::audit::execute(strict);
+        }
     }
 }
