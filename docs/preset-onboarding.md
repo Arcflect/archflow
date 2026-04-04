@@ -69,6 +69,8 @@ Generated files in the current directory:
 - `placement.rules.yaml`
 - `contracts.template.yaml`
 - `artifacts.plan.yaml` (when included by the preset)
+- `policy.profile.yaml`
+- `guard.sidecar.yaml`
 
 ### 2. Continue standard flow
 

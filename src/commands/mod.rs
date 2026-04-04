@@ -1,5 +1,6 @@
 pub mod audit;
 pub mod fix;
+pub mod guard;
 pub mod init;
 pub mod plan;
 pub mod preset_registry;

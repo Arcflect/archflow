@@ -15,6 +15,13 @@ pub enum OutputMode {
     Compact,
 }
 
+#[derive(Clone, Debug, ValueEnum)]
+pub enum GuardHook {
+    Init,
+    Plan,
+    Ci,
+}
+
 impl std::fmt::Display for OutputMode {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -90,5 +97,14 @@ pub enum Commands {
         /// Destination directory to install into
         #[arg(long, default_value = "presets")]
         destination_dir: String,
+    },
+    /// Run sidecar guard checks explicitly for init/plan/ci hooks
+    Guard {
+        /// Hook point to evaluate
+        #[arg(long, value_enum, default_value = "ci")]
+        hook: GuardHook,
+        /// Treat warnings as failures (exit code 1)
+        #[arg(long)]
+        strict: bool,
     },
 }

@@ -5,7 +5,7 @@ mod generator;
 pub mod model;
 
 use clap::Parser;
-use cli::{Cli, Commands};
+use cli::{Cli, Commands, GuardHook};
 
 fn main() {
     let cli = Cli::parse();
@@ -54,6 +54,14 @@ fn main() {
                 &registry_dir,
                 &destination_dir,
             );
+        }
+        Commands::Guard { hook, strict } => {
+            let hook_point = match hook {
+                GuardHook::Init => commands::guard::GuardHookPoint::Init,
+                GuardHook::Plan => commands::guard::GuardHookPoint::Plan,
+                GuardHook::Ci => commands::guard::GuardHookPoint::Ci,
+            };
+            commands::guard::execute_cli(hook_point, strict);
         }
     }
 }

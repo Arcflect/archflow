@@ -166,6 +166,8 @@ The expected repository shape is:
 Optional files may include:
 
 - `presets/<preset-name>/artifacts.plan.yaml`
+- `presets/<preset-name>/policy.profile.yaml`
+- `presets/<preset-name>/guard.sidecar.yaml`
 - `presets/<preset-name>/prompts/`
 
 ### Why this packaging is minimal
