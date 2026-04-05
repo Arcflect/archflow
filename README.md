@@ -109,6 +109,19 @@ Run baseline audit checks (strict mode fails on warnings):
 cargo run -- audit --strict
 ```
 
+## CLI Install and Update
+
+Archflow CLI distribution is standardized through GitHub Releases.
+
+- Release operation guide: [docs/release-operations.md](./docs/release-operations.md)
+- Release workflow: [`.github/workflows/archflow-release-cli.yml`](./.github/workflows/archflow-release-cli.yml)
+
+Quick install references:
+
+- Binary install from GitHub Releases (recommended for users and CI)
+- `archflow --version` should report the pinned version after install
+- For CI, pin a fixed `vX.Y.Z` and cache by `${version}-${target}`
+
 Export multi-repo compliance metrics (JSON/CSV):
 
 ```bash
@@ -209,6 +222,7 @@ Core concepts:
 
 Usage:
 - [docs/usage.md](./docs/usage.md)
+- [docs/release-operations.md](./docs/release-operations.md)
 - [`.github/workflows/archflow-audit-pr-gate.yml`](./.github/workflows/archflow-audit-pr-gate.yml)
 
 Schema drafts:

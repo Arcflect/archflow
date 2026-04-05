@@ -5,6 +5,50 @@ This document provides typical commands to initialize and verify prompt generati
 ## Prerequisites
 Ensure the binary is built and available. You can run it via `cargo run` from the project root.
 
+Official CLI distribution/update operations are documented in:
+
+- `docs/release-operations.md`
+
+---
+
+## CLI Distribution Quick Start
+
+For users, use the official installer script (Linux/macOS).
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Arcflect/archflow/main/scripts/install-archflow.sh | bash
+```
+
+Install a pinned version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Arcflect/archflow/main/scripts/install-archflow.sh | bash -s -- vX.Y.Z
+```
+
+For CI, prefer pinned binary installation with checksum verification.
+
+```bash
+ARCHFLOW_VERSION=vX.Y.Z
+if [[ "$(uname -m)" == "aarch64" || "$(uname -m)" == "arm64" ]]; then
+  ARCHFLOW_TARGET=aarch64-unknown-linux-gnu
+else
+  ARCHFLOW_TARGET=x86_64-unknown-linux-gnu
+fi
+
+curl -fsSL -o archflow.tar.gz "https://github.com/Arcflect/archflow/releases/download/${ARCHFLOW_VERSION}/archflow-${ARCHFLOW_VERSION}-${ARCHFLOW_TARGET}.tar.gz"
+curl -fsSL -o archflow.tar.gz.sha256 "https://github.com/Arcflect/archflow/releases/download/${ARCHFLOW_VERSION}/archflow-${ARCHFLOW_VERSION}-${ARCHFLOW_TARGET}.tar.gz.sha256"
+sha256sum -c archflow.tar.gz.sha256
+tar -xzf archflow.tar.gz
+chmod +x archflow
+./archflow --version
+```
+
+CI guideline:
+
+- Pin `ARCHFLOW_VERSION` explicitly (do not install floating latest)
+- Cache by `${ARCHFLOW_VERSION}-${ARCHFLOW_TARGET}`
+- Validate with `archflow --version` before running pipeline steps
+
 ---
 
 ## Preset Bootstrap: `archflow init`
