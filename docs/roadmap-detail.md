@@ -32,6 +32,9 @@ The overall flow is:
 - Phase 7: Audit / Policy / CI integration
 - Phase 8: Preset Registry & Guard
 - Phase 9: Migration / Org-level Control / Reporting
+- Phase 10: Autonomous Governance
+- Phase 11: Enterprise Control Plane
+- Phase 12: Ecosystem & Marketplace
 
 The purpose of this phased approach is to keep the project focused.
 
@@ -537,9 +540,102 @@ Provide enterprise-scale update workflows and compliance visibility.
 
 ---
 
+## Phase 10: Autonomous Governance
+
+### Goal
+
+Automate governance operations while preserving safe review boundaries.
+
+### Main work items
+
+- standardize `archflow` CLI distribution and release operations
+- automate violation triage and remediation prioritization
+- introduce approval-gated `fix` rollout workflow
+
+### Definition of done
+
+- CLI distribution and release workflow is documented and repeatable
+- violation triage results can be prioritized automatically with explicit criteria
+- risky fixes require approval before rollout, with clear audit logs
+
+### What not to overbuild
+
+- avoid full autonomous remediation for high-risk changes
+- avoid release channel sprawl before core distribution flow is stable
+
+### Linked execution tasks
+
+- [#152](https://github.com/Arcflect/archflow/issues/152)
+- [#153](https://github.com/Arcflect/archflow/issues/153)
+- [#154](https://github.com/Arcflect/archflow/issues/154)
+
+---
+
+## Phase 11: Enterprise Control Plane
+
+### Goal
+
+Establish enterprise-grade control ownership and accountability.
+
+### Main work items
+
+- deliver RBAC role model for governance operations
+- implement expiring override lifecycle and policy exceptions
+- strengthen audit evidence retention and extraction workflow
+
+### Definition of done
+
+- role responsibilities for view/approve/apply operations are enforced
+- override lifecycle includes expiry and exception controls with explicit traceability
+- audit evidence can be retained and extracted within target SLA
+
+### What not to overbuild
+
+- avoid complex UI-first control plane work before policy operations are stable
+- avoid broad integration expansion before evidence model is validated
+
+### Linked execution tasks
+
+- [#155](https://github.com/Arcflect/archflow/issues/155)
+- [#156](https://github.com/Arcflect/archflow/issues/156)
+- [#157](https://github.com/Arcflect/archflow/issues/157)
+
+---
+
+## Phase 12: Ecosystem & Marketplace
+
+### Goal
+
+Scale trusted preset ecosystem operations across internal and external contributors.
+
+### Main work items
+
+- define preset signature and trust verification pipeline
+- build partner preset submission and review flow
+- publish ecosystem compliance maturity benchmark model
+
+### Definition of done
+
+- signed preset verification is available in distribution and install flow
+- partner submission/review workflow is documented and operational
+- benchmark model can compare compliance maturity across participating repositories
+
+### What not to overbuild
+
+- avoid broad marketplace automation before trust model is validated
+- avoid overfitting benchmark criteria before baseline adoption data is collected
+
+### Linked execution tasks
+
+- [#158](https://github.com/Arcflect/archflow/issues/158)
+- [#159](https://github.com/Arcflect/archflow/issues/159)
+- [#160](https://github.com/Arcflect/archflow/issues/160)
+
+---
+
 ## Suggested practical milestone order
 
-## Active phase issues (Phase6-Phase9)
+## Active phase issues (Phase6-Phase12)
 
 Use these issues as the execution baseline for ongoing roadmap work.
 
@@ -555,6 +651,15 @@ Use these issues as the execution baseline for ongoing roadmap work.
 - [#136](https://github.com/Arcflect/archflow/issues/136) Phase9 Task 1: Deliver preset versioning and migration tooling
 - [#137](https://github.com/Arcflect/archflow/issues/137) Phase9 Task 2: Implement org/team override precedence model
 - [#138](https://github.com/Arcflect/archflow/issues/138) Phase9 Task 3: Build multi-repo compliance reporting exports
+- [#152](https://github.com/Arcflect/archflow/issues/152) Phase10 Task 1: Standardize archflow CLI distribution and release operations
+- [#153](https://github.com/Arcflect/archflow/issues/153) Phase10 Task 2: Automate violation triage and remediation prioritization
+- [#154](https://github.com/Arcflect/archflow/issues/154) Phase10 Task 3: Introduce approval-gated fix rollout workflow
+- [#155](https://github.com/Arcflect/archflow/issues/155) Phase11 Task 1: Deliver RBAC role model for governance operations
+- [#156](https://github.com/Arcflect/archflow/issues/156) Phase11 Task 2: Implement expiring override lifecycle and policy exceptions
+- [#157](https://github.com/Arcflect/archflow/issues/157) Phase11 Task 3: Strengthen audit evidence retention and extraction workflow
+- [#158](https://github.com/Arcflect/archflow/issues/158) Phase12 Task 1: Define preset signature and trust verification pipeline
+- [#159](https://github.com/Arcflect/archflow/issues/159) Phase12 Task 2: Build partner preset submission and review flow
+- [#160](https://github.com/Arcflect/archflow/issues/160) Phase12 Task 3: Publish ecosystem compliance maturity benchmark model
 
 A practical internal milestone sequence may look like this:
 
@@ -641,6 +746,9 @@ Archflow はフェーズごとに開発されています。
 - Phase 7: Audit / Policy / CI 統合
 - Phase 8: Preset Registry と Guard
 - Phase 9: Migration / Org-level Control / Reporting
+- Phase 10: Autonomous Governance
+- Phase 11: Enterprise Control Plane
+- Phase 12: Ecosystem & Marketplace
 
 このフェーズ型アプローチの目的は、プロジェクトに焦点を当て続けることです。
 
@@ -1151,7 +1259,61 @@ Preset 流通を拡大しつつ、contract-first / sidecar-first を維持する
 - [#137](https://github.com/Arcflect/archflow/issues/137)
 - [#138](https://github.com/Arcflect/archflow/issues/138)
 
-### 実行中Issue一覧（Phase6-Phase9）
+### Phase 10: Autonomous Governance
+
+#### 目標
+
+安全なレビュー境界を維持しながら、運用ガバナンスを自動化する。
+
+#### 主な作業
+
+- `archflow` CLI 配布・リリース手順の標準化
+- 違反トリアージと是正優先度付けの自動化
+- 承認付き `fix` 段階適用ワークフローの導入
+
+#### 実行Issue
+
+- [#152](https://github.com/Arcflect/archflow/issues/152)
+- [#153](https://github.com/Arcflect/archflow/issues/153)
+- [#154](https://github.com/Arcflect/archflow/issues/154)
+
+### Phase 11: Enterprise Control Plane
+
+#### 目標
+
+組織運用に必要な統制責任と実行責任を明確化する。
+
+#### 主な作業
+
+- ガバナンス運用向けRBACロールモデルの提供
+- 期限付きoverrideとポリシー例外のライフサイクル実装
+- 監査証跡の保持・抽出フロー強化
+
+#### 実行Issue
+
+- [#155](https://github.com/Arcflect/archflow/issues/155)
+- [#156](https://github.com/Arcflect/archflow/issues/156)
+- [#157](https://github.com/Arcflect/archflow/issues/157)
+
+### Phase 12: Ecosystem & Marketplace
+
+#### 目標
+
+信頼可能なPresetエコシステム運用を内外のコントリビューターへ拡張する。
+
+#### 主な作業
+
+- Preset署名と信頼検証パイプラインの定義
+- パートナーPreset投稿・審査フローの構築
+- エコシステム準拠成熟度ベンチマークモデルの公開
+
+#### 実行Issue
+
+- [#158](https://github.com/Arcflect/archflow/issues/158)
+- [#159](https://github.com/Arcflect/archflow/issues/159)
+- [#160](https://github.com/Arcflect/archflow/issues/160)
+
+### 実行中Issue一覧（Phase6-Phase12）
 
 進行管理は以下のIssue番号を基準とします。
 
@@ -1167,3 +1329,12 @@ Preset 流通を拡大しつつ、contract-first / sidecar-first を維持する
 - [#136](https://github.com/Arcflect/archflow/issues/136) Phase9 Task 1: Deliver preset versioning and migration tooling
 - [#137](https://github.com/Arcflect/archflow/issues/137) Phase9 Task 2: Implement org/team override precedence model
 - [#138](https://github.com/Arcflect/archflow/issues/138) Phase9 Task 3: Build multi-repo compliance reporting exports
+- [#152](https://github.com/Arcflect/archflow/issues/152) Phase10 Task 1: Standardize archflow CLI distribution and release operations
+- [#153](https://github.com/Arcflect/archflow/issues/153) Phase10 Task 2: Automate violation triage and remediation prioritization
+- [#154](https://github.com/Arcflect/archflow/issues/154) Phase10 Task 3: Introduce approval-gated fix rollout workflow
+- [#155](https://github.com/Arcflect/archflow/issues/155) Phase11 Task 1: Deliver RBAC role model for governance operations
+- [#156](https://github.com/Arcflect/archflow/issues/156) Phase11 Task 2: Implement expiring override lifecycle and policy exceptions
+- [#157](https://github.com/Arcflect/archflow/issues/157) Phase11 Task 3: Strengthen audit evidence retention and extraction workflow
+- [#158](https://github.com/Arcflect/archflow/issues/158) Phase12 Task 1: Define preset signature and trust verification pipeline
+- [#159](https://github.com/Arcflect/archflow/issues/159) Phase12 Task 2: Build partner preset submission and review flow
+- [#160](https://github.com/Arcflect/archflow/issues/160) Phase12 Task 3: Publish ecosystem compliance maturity benchmark model
