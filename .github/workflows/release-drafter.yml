@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   update_release_draft:
@@ -64,16 +64,34 @@ jobs:
           cargo_lock.write_text(lock_text_new, encoding="utf-8")
           PY
 
-      - name: Commit version sync
+      - name: Detect version sync diff
+        id: version_diff
         shell: bash
         run: |
           if git diff --quiet -- Cargo.toml Cargo.lock; then
             echo "No version changes to commit"
-            exit 0
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Cargo.toml Cargo.lock
-          git commit -m "chore: sync version with release drafter"
-          git push
+      - name: Create pull request for version sync
+        if: steps.version_diff.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: sync version with release drafter"
+          title: "chore: sync version with release drafter"
+          body: |
+            Automated version synchronization generated from release-drafter resolved version.
+
+            - Updates `Cargo.toml` version
+            - Updates root package version in `Cargo.lock`
+          branch: "chore/release-version-sync-v${{ steps.drafter.outputs.resolved_version }}"
+          base: main
+          labels: |
+            chore
+            ci
+          add-paths: |
+            Cargo.toml
+            Cargo.lock
