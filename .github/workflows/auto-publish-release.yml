@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   publish_if_ready:
@@ -58,14 +59,32 @@ jobs:
 
       - name: Publish draft release
         if: steps.tag_check.outputs.exists == 'false' && steps.draft.outputs.found == 'true'
+        id: publish_release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           RELEASE_ID="${{ steps.draft.outputs.id }}"
+          TAG="${{ steps.cargo_tag.outputs.value }}"
           gh api \
             -X PATCH \
             "repos/${{ github.repository }}/releases/${RELEASE_ID}" \
             -f draft=false
 
           echo "Published draft release id=${RELEASE_ID}"
+          echo "published_tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger release artifact build workflow
+        if: steps.publish_release.outputs.published_tag != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.publish_release.outputs.published_tag }}"
+          gh api \
+            -X POST \
+            "repos/${{ github.repository }}/actions/workflows/archflow-release-cli.yml/dispatches" \
+            -f ref=main \
+            -f "inputs[tag]=${TAG}"
+
+          echo "Triggered archflow-release-cli.yml for ${TAG}"

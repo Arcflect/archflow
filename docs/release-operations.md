@@ -38,10 +38,14 @@ The release tag is created by GitHub when the draft is published — no manual `
    - reads version from `Cargo.toml` (e.g. `1.0.0` -> `v1.0.0`)
    - finds matching draft release (`tag_name == vX.Y.Z`, `draft == true`)
    - publishes it automatically
+   - explicitly triggers `archflow-release-cli.yml` via `workflow_dispatch` for the same tag
 
-5. On `release: published`, two CI workflows trigger automatically:
-   - `verify-tag-version.yml`: validates `Cargo.toml` version matches the release tag — fails if mismatched.
-   - `archflow-release-cli.yml`: builds binaries, runs smoke tests, uploads assets to the published release.
+5. `archflow-release-cli.yml` builds release packages and uploads them to the published release:
+   - Linux/macOS archives per target (`.tar.gz`)
+   - per-archive `.sha256`
+   - aggregated `checksums.txt`
+
+6. `verify-tag-version.yml` validates `Cargo.toml` version matches the release tag (`release: published`).
 
 > **Important**: `archflow --version` output is determined by `Cargo.toml` at compile time.
 > If the version-sync PR has not been merged yet, do not publish the release. Merge first.
@@ -120,7 +124,7 @@ Cache strategy:
 | Workflow | Trigger | Purpose |
 |---|---|---|
 | `release-drafter.yml` | push to `main` | Updates draft release body and opens a version-sync PR when `Cargo.toml` / `Cargo.lock` updates are needed |
-| `auto-publish-release.yml` | push to `main` | Publishes matching draft release for the current `Cargo.toml` version (creates release tag automatically) |
+| `auto-publish-release.yml` | push to `main` | Publishes matching draft release for the current `Cargo.toml` version and dispatches artifact build workflow |
 | `pr-title-check.yml` | pull_request | Validates PR title format (`type: summary`) |
 | `pr-auto-label.yml` | pull_request_target | Auto-applies labels based on branch/title/files |
 | `verify-tag-version.yml` | release `published` | Validates `Cargo.toml` version matches the release tag |
