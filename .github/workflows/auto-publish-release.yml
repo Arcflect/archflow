@@ -1,0 +1,84 @@
+name: Auto Publish Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish_if_ready:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve Cargo version tag
+        id: cargo_tag
+        shell: bash
+        run: |
+          VERSION="$(python - <<'PY'
+import tomllib
+from pathlib import Path
+
+data = tomllib.loads(Path('Cargo.toml').read_text(encoding='utf-8'))
+print(data['package']['version'])
+PY
+)"
+          echo "value=v${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if tag already exists
+        id: tag_check
+        shell: bash
+        run: |
+          TAG="${{ steps.cargo_tag.outputs.value }}"
+          if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q .; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${TAG} already exists. Nothing to publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Find draft release matching Cargo version
+        if: steps.tag_check.outputs.exists == 'false'
+        id: draft
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.cargo_tag.outputs.value }}"
+          RELEASE_JSON="$(gh api repos/${{ github.repository }}/releases --paginate --jq ".[] | select(.tag_name == \"${TAG}\" and .draft == true) | {id: .id, tag_name: .tag_name}" || true)"
+
+          if [[ -z "$RELEASE_JSON" ]]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No draft release found for ${TAG}."
+            exit 0
+          fi
+
+          RELEASE_ID="$(echo "$RELEASE_JSON" | python - <<'PY'
+import json
+import sys
+data = json.load(sys.stdin)
+print(data['id'])
+PY
+)"
+
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "id=${RELEASE_ID}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish draft release
+        if: steps.tag_check.outputs.exists == 'false' && steps.draft.outputs.found == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RELEASE_ID="${{ steps.draft.outputs.id }}"
+          gh api \
+            -X PATCH \
+            "repos/${{ github.repository }}/releases/${RELEASE_ID}" \
+            -f draft=false
+
+          echo "Published draft release id=${RELEASE_ID}"
