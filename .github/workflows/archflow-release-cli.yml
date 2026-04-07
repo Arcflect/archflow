@@ -1,8 +1,6 @@
 name: Archflow Release CLI
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       tag:
@@ -289,11 +287,7 @@ jobs:
         id: release_tag
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "release" ]]; then
-            echo "value=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "value=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
-          fi
+          echo "value=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
@@ -313,11 +307,25 @@ jobs:
           cat *.sha256 > checksums.txt
           popd >/dev/null
 
-      - name: Upload assets to release
+      - name: Upload assets to draft release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.release_tag.outputs.value }}
+          draft: true
           files: |
             dist/release-assets/*.tar.gz
             dist/release-assets/*.sha256
             dist/release-assets/checksums.txt
+
+      - name: Publish release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ steps.release_tag.outputs.value }}"
+          RELEASE_ID="$(gh api "repos/${{ github.repository }}/releases" --paginate --jq ".[] | select(.tag_name == \"${TAG}\") | .id" | head -1)"
+          gh api \
+            -X PATCH \
+            "repos/${{ github.repository }}/releases/${RELEASE_ID}" \
+            -f draft=false
+          echo "Published release ${TAG} (id=${RELEASE_ID})"
