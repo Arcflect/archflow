@@ -20,14 +20,7 @@ jobs:
         id: cargo_tag
         shell: bash
         run: |
-          VERSION="$(python - <<'PY'
-import tomllib
-from pathlib import Path
-
-data = tomllib.loads(Path('Cargo.toml').read_text(encoding='utf-8'))
-print(data['package']['version'])
-PY
-)"
+          VERSION="$(python -c "import tomllib; from pathlib import Path; data = tomllib.loads(Path('Cargo.toml').read_text(encoding='utf-8')); print(data['package']['version'])")"
           echo "value=v${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Skip if tag already exists
@@ -58,13 +51,7 @@ PY
             exit 0
           fi
 
-          RELEASE_ID="$(echo "$RELEASE_JSON" | python - <<'PY'
-import json
-import sys
-data = json.load(sys.stdin)
-print(data['id'])
-PY
-)"
+          RELEASE_ID="$(echo "$RELEASE_JSON" | python -c "import json,sys; print(json.load(sys.stdin)['id'])")"
 
           echo "found=true" >> "$GITHUB_OUTPUT"
           echo "id=${RELEASE_ID}" >> "$GITHUB_OUTPUT"
