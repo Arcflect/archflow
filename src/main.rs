@@ -135,5 +135,26 @@ fn main() {
         Commands::Triage { top, json } => {
             commands::triage::execute(top, json);
         }
+        Commands::FixRolloutPlan { output } => {
+            commands::fix_rollout::execute_plan(std::path::Path::new("."), &output);
+        }
+        Commands::FixRolloutApprove {
+            plan_file,
+            all,
+            ids,
+            approver,
+            reject,
+        } => {
+            commands::fix_rollout::execute_approve(
+                &plan_file,
+                &ids,
+                all,
+                approver.as_deref(),
+                reject,
+            );
+        }
+        Commands::FixRolloutApply { plan_file, strict } => {
+            commands::fix_rollout::execute_apply(&plan_file, strict);
+        }
     }
 }
