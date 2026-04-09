@@ -10,6 +10,14 @@ pub struct ValidateProjectUseCase;
 
 impl ValidateProjectUseCase {
     pub fn execute(_input: ValidateProjectInput) -> ValidateProjectOutput {
+        let mut output = crate::ports::StdOutputPort;
+        Self::execute_with_output(_input, &mut output)
+    }
+
+    pub fn execute_with_output(
+        _input: ValidateProjectInput,
+        output: &mut dyn crate::ports::OutputPort,
+    ) -> ValidateProjectOutput {
         if let (Ok(project), Ok(placement), Ok(artifacts)) = (
             crate::config::ProjectConfig::load("project.arch.yaml"),
             crate::config::PlacementRulesConfig::load("placement.rules.yaml"),
@@ -22,19 +30,29 @@ impl ValidateProjectUseCase {
                 &artifacts,
             );
             if !result.is_valid() || result.warning_count() > 0 {
-                eprintln!(
-                    "[!] Structural validation: {} error(s), {} warning(s)",
-                    result.error_count(),
-                    result.warning_count()
+                output.write_line(
+                    crate::ports::OutputLevel::Warn,
+                    &format!(
+                        "Structural validation: {} error(s), {} warning(s)",
+                        result.error_count(),
+                        result.warning_count()
+                    ),
                 );
                 for violation in &result.violations {
                     let level = match violation.severity {
-                        crate::domain::validation::ViolationSeverity::Error => "error",
-                        crate::domain::validation::ViolationSeverity::Warn => "warn",
+                        crate::domain::validation::ViolationSeverity::Error => {
+                            crate::ports::OutputLevel::Error
+                        }
+                        crate::domain::validation::ViolationSeverity::Warn => {
+                            crate::ports::OutputLevel::Warn
+                        }
                     };
-                    eprintln!(
-                        "    - [{}][{}] {} ({})",
-                        violation.rule_id, level, violation.message, violation.target
+                    output.write_line(
+                        level,
+                        &format!(
+                            "- [{}] {} ({})",
+                            violation.rule_id, violation.message, violation.target
+                        ),
                     );
                 }
             }
