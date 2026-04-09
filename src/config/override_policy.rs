@@ -446,7 +446,7 @@ fn friendly_label(level: &OverrideLevel, label: &str) -> String {
 }
 
 // ---------------------------------------------------------------------------
-// Load helper: default paths
+// Default policy path loader
 // ---------------------------------------------------------------------------
 
 /// Load and resolve the effective policy using the standard lookup paths.

@@ -270,6 +270,11 @@ Examples of weak role names:
 
 Weak role names make placement and contract behavior harder to reason about.
 
+Note:
+`service` can be valid when it is an explicit architectural role with a clear contract.
+If the name is used as a catch-all bucket, prefer a more specific role that states
+responsibility and boundary ownership.
+
 ---
 
 ## Why it matters

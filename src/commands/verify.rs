@@ -407,7 +407,7 @@ fn find_all_contracts<P: AsRef<Path>>(dir: P) -> Vec<PathBuf> {
         if let Ok(entry) = entry {
             let path = entry.path();
             if path.is_dir() {
-                // Skip common ignore directories
+                // Skip dependency/build directories while walking for contracts.
                 let name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
                 if name == "target" || name == ".git" || name == "node_modules" {
                     continue;

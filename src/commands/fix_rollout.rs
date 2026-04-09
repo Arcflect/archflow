@@ -66,7 +66,7 @@ pub struct FixRolloutPlan {
     pub applied_at_unix: Option<u64>,
 }
 
-// ── helpers ─────────────────────────────────────────────────────────────────
+// ── plan assembly and persistence ───────────────────────────────────────────
 
 fn now_unix() -> u64 {
     SystemTime::now()

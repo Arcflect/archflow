@@ -106,6 +106,12 @@ A module should be:
 
 A good module reflects a coherent area of the system.
 
+### Module naming note
+
+Prefer names that reveal ownership and capability, such as `billing` or `catalog`.
+Avoid generic buckets like `common`, `utils`, `helpers`, `manager`, or `processor`
+because they hide architectural boundaries and make placement intent unclear.
+
 ---
 
 ## What a module should not do
