@@ -1,4 +1,6 @@
 use crate::config::{ArtifactsPlanConfig, PlacementRulesConfig, ProjectConfig};
+use crate::domain::generation::{ArtifactGenerationStatus, ArtifactGenerator};
+use crate::domain::project::ProjectContext;
 
 pub fn execute() {
     let project_config = match ProjectConfig::load("project.arch.yaml") {
@@ -33,24 +35,29 @@ pub fn execute() {
     println!();
 
     println!("Generating Artifacts:");
+    let context = ProjectContext::from_project_config(&project_config);
+    let generation_plan = ArtifactGenerator::build_plan(&context, &placement_config, &artifacts_config);
+
     let mut success_count = 0;
     let mut error_count = 0;
-
-    for artifact in &artifacts_config.artifacts {
-        if !project_config.has_module(&artifact.module) {
-            eprintln!(
-                "  [!] {} [{}]: Module Error: module '{}' is not defined in project.arch.yaml",
-                artifact.name, artifact.role, artifact.module
-            );
-            error_count += 1;
-            continue;
-        }
-
-        match crate::generator::resolve_artifact_path(artifact, &placement_config) {
-            Ok(path) => {
+    for item in generation_plan.items {
+        match item.status {
+            ArtifactGenerationStatus::Ready => {
+                let artifact = item.artifact;
+                let path = match item.resolved_path {
+                    Some(path) => path,
+                    None => {
+                        eprintln!(
+                            "  [!] {} [{}]: Planning Error: missing resolved path",
+                            artifact.name, artifact.role
+                        );
+                        error_count += 1;
+                        continue;
+                    }
+                };
                 let role_config = placement_config.roles.get(&artifact.role);
                 match crate::generator::scaffold::generate_artifact_with_sidecars(
-                    artifact,
+                    &artifact,
                     &path,
                     role_config,
                 ) {
@@ -72,10 +79,13 @@ pub fn execute() {
                     }
                 }
             }
-            Err(e) => {
+            ArtifactGenerationStatus::Error => {
+                let artifact = item.artifact;
                 eprintln!(
-                    "  [!] {} [{}]: Path Error: {}",
-                    artifact.name, artifact.role, e
+                    "  [!] {} [{}]: Planning Error: {}",
+                    artifact.name,
+                    artifact.role,
+                    item.error_message.as_deref().unwrap_or("unknown error")
                 );
                 error_count += 1;
             }

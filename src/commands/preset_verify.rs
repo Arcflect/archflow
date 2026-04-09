@@ -271,7 +271,7 @@ pub fn render_report(report: &AlignmentReport) {
 }
 
 // ---------------------------------------------------------------------------
-// Internal check helpers
+// Internal alignment checks
 // ---------------------------------------------------------------------------
 
 /// Check contracts.template.yaml content.
