@@ -1,5 +1,12 @@
 use crate::cli::{Commands, ComplianceReportFormat, GuardHook};
 
+fn render_usecase_result(success: bool, context: &str) {
+    if !success {
+        eprintln!("[!] {} failed", context);
+        std::process::exit(1);
+    }
+}
+
 struct ComplianceReportInput {
     repos: Vec<String>,
     repos_file: Option<String>,
@@ -23,19 +30,34 @@ pub fn handle(command: Commands) {
             project_name,
             dry_run,
         } => {
-            crate::commands::init::execute(preset.as_deref(), project_name.as_deref(), dry_run);
+            let input = crate::app::usecase::InitProjectInput {
+                preset,
+                project_name,
+                dry_run,
+            };
+            let output = crate::app::usecase::InitProjectUseCase::execute(input);
+            render_usecase_result(output.success, "init project");
         }
         Commands::Plan => {
-            crate::commands::plan::execute();
+            let output = crate::app::usecase::PlanArchitectureUseCase::execute(
+                crate::app::usecase::PlanArchitectureInput,
+            );
+            render_usecase_result(output.success, "plan architecture");
         }
         Commands::Scaffold => {
-            crate::commands::scaffold::execute();
+            let output = crate::app::usecase::GenerateArtifactsUseCase::execute(
+                crate::app::usecase::GenerateArtifactsInput,
+            );
+            render_usecase_result(output.success, "generate artifacts");
         }
         Commands::Prompt { target, mode } => {
             crate::commands::prompt::execute(&target, mode);
         }
         Commands::Verify => {
-            crate::commands::verify::execute();
+            let output = crate::app::usecase::ValidateProjectUseCase::execute(
+                crate::app::usecase::ValidateProjectInput,
+            );
+            render_usecase_result(output.success, "validate project");
         }
         Commands::Audit { strict } => {
             crate::commands::audit::execute(strict);
