@@ -4,6 +4,7 @@ mod commands;
 mod config;
 mod domain;
 mod generator;
+mod infra;
 mod ports;
 pub mod model;
 

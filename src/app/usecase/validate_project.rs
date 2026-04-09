@@ -9,11 +9,6 @@ pub struct ValidateProjectOutput {
 pub struct ValidateProjectUseCase;
 
 impl ValidateProjectUseCase {
-    pub fn execute(_input: ValidateProjectInput) -> ValidateProjectOutput {
-        let mut output = crate::ports::StdOutputPort;
-        Self::execute_with_output(_input, &mut output)
-    }
-
     pub fn execute_with_output(
         _input: ValidateProjectInput,
         output: &mut dyn crate::ports::OutputPort,
