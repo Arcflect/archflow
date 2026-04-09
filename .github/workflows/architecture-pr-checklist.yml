@@ -24,6 +24,7 @@ jobs:
             const pr = context.payload.pull_request
             const body = pr.body || ''
             const marker = '<!-- architecture-pr-checklist -->'
+            const isForkPr = pr.head?.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`
 
             const files = await github.paginate(
               github.rest.pulls.listFiles,
@@ -159,6 +160,23 @@ jobs:
             }
 
             async function syncComment({ body, deleteIfMatchesMarker }) {
+              if (isForkPr) {
+                core.info('Skipping PR comment update because this pull request comes from a fork and may have read-only token permissions.')
+                return
+              }
+
+              const tryRun = async (op) => {
+                try {
+                  return await op()
+                } catch (error) {
+                  if (error?.status === 403) {
+                    core.warning(`Skipping PR comment update due to permission restrictions (HTTP 403): ${error.message}`)
+                    return null
+                  }
+                  throw error
+                }
+              }
+
               const comments = await github.paginate(
                 github.rest.issues.listComments,
                 {
@@ -175,29 +193,29 @@ jobs:
 
               if (deleteIfMatchesMarker) {
                 if (existing) {
-                  await github.rest.issues.deleteComment({
+                  await tryRun(() => github.rest.issues.deleteComment({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: existing.id,
-                  })
+                  }))
                 }
                 return
               }
 
               if (existing) {
-                await github.rest.issues.updateComment({
+                await tryRun(() => github.rest.issues.updateComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: existing.id,
                   body,
-                })
+                }))
                 return
               }
 
-              await github.rest.issues.createComment({
+              await tryRun(() => github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: pr.number,
                 body,
-              })
+              }))
             }
