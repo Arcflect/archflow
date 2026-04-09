@@ -10,6 +10,6 @@ pub use filesystem::FilesystemPort;
 pub use git::GitPort;
 #[allow(unused_imports)]
 pub use llm::{LlmPort, LlmRequest, LlmResponse};
-pub use output::{OutputLevel, OutputPort, StdOutputPort};
+pub use output::{OutputLevel, OutputPort};
 #[allow(unused_imports)]
 pub use template::TemplateRendererPort;

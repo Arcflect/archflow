@@ -57,8 +57,10 @@ pub fn handle(command: Commands) {
             crate::commands::prompt::execute(&target, mode);
         }
         Commands::Verify => {
-            let output = crate::app::usecase::ValidateProjectUseCase::execute(
+            let mut output_adapter = crate::infra::ConsoleOutputAdapter;
+            let output = crate::app::usecase::ValidateProjectUseCase::execute_with_output(
                 crate::app::usecase::ValidateProjectInput,
+                &mut output_adapter,
             );
             render_usecase_result(output.success, "validate project");
         }
