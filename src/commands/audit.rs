@@ -37,9 +37,10 @@ pub struct AuditReport {
     pub findings: Vec<AuditFinding>,
     pub errors: usize,
     pub warnings: usize,
+    pub timestamp: String,
 }
 
-pub fn execute(strict: bool) {
+pub fn execute(strict: bool, evidence_export: Option<String>) {
     let report = match run_for_root(Path::new(".")) {
         Ok(report) => report,
         Err(err) => {
@@ -49,6 +50,21 @@ pub fn execute(strict: bool) {
     };
 
     render_report(&report.findings);
+
+    if let Some(export_path) = evidence_export {
+        match serde_json::to_string_pretty(&report) {
+            Ok(json_content) => {
+                if let Err(e) = std::fs::write(&export_path, json_content) {
+                    eprintln!("[!] Failed to write audit evidence to {}: {}", export_path, e);
+                } else {
+                    println!("\n[i] Audit evidence successfully exported to: {}", export_path);
+                }
+            }
+            Err(e) => {
+                eprintln!("[!] Failed to serialize audit evidence: {}", e);
+            }
+        }
+    }
 
     if report.errors > 0 || (strict && report.warnings > 0) {
         std::process::exit(1);
@@ -155,6 +171,7 @@ fn build_report(root: &Path, findings: Vec<AuditFinding>) -> AuditReport {
         findings,
         errors,
         warnings,
+        timestamp: chrono::Utc::now().to_rfc3339(),
     }
 }
 

@@ -83,6 +83,9 @@ pub enum Commands {
         /// Treat warnings as failures (exit code 1)
         #[arg(long)]
         strict: bool,
+        /// Export audit evidence to a structured JSON file for retention
+        #[arg(long)]
+        evidence_export: Option<String>,
     },
     /// Apply conservative automatic remediations with dry-run preview
     Fix {
