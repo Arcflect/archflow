@@ -123,8 +123,8 @@ pub fn handle(command: Commands) {
             };
             render_usecase_result(output.success, "validate project");
         }
-        Commands::Audit { strict } => {
-            crate::commands::audit::execute(strict);
+        Commands::Audit { strict, evidence_export } => {
+            crate::commands::audit::execute(strict, evidence_export);
         }
         Commands::Fix { dry_run, apply } => {
             crate::commands::fix::execute(dry_run, apply);
