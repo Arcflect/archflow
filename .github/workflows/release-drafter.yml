@@ -5,6 +5,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      version:
+        description: '(Optional) Specify the next version (e.g., 1.2.3). If omitted, it will be calculated automatically.'
+        required: false
+        type: string
+      tag:
+        description: '(Optional) Specify the next tag (e.g., v1.2.3). If omitted, it will be generated from the version.'
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -20,6 +29,8 @@ jobs:
         uses: release-drafter/release-drafter@v7
         with:
           config-name: release-drafter.yml
+          version: ${{ github.event.inputs.version }}
+          tag: ${{ github.event.inputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
