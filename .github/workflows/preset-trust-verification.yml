@@ -6,6 +6,8 @@ on:
       - 'presets/**'
       - '.github/trust/allowed_signers'
       - 'scripts/verify_trust.sh'
+      - 'scripts/validate_allowed_signers.sh'
+      - 'scripts/test_*.sh'
   workflow_dispatch:
 
 jobs:
@@ -14,16 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Validate Trust Verification Tests
+      - name: Run Trust Governance Tests
         run: |
           chmod +x ./scripts/test_verify_trust.sh
+          chmod +x ./scripts/test_validate_allowed_signers.sh
           ./scripts/test_verify_trust.sh
+          ./scripts/test_validate_allowed_signers.sh
 
-      - name: Check allowed_signers format
+      - name: Validate allowed_signers format constraints
         run: |
           if [ -f .github/trust/allowed_signers ]; then
-            # Ensure it can be parsed by ssh-keygen
-            ssh-keygen -l -f .github/trust/allowed_signers
+            chmod +x ./scripts/validate_allowed_signers.sh
+            ./scripts/validate_allowed_signers.sh .github/trust/allowed_signers
           else
             echo "::warning::allowed_signers file is missing."
           fi

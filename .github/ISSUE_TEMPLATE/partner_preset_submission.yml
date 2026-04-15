@@ -1,0 +1,51 @@
+name: Partner preset submission / パートナーPreset提出
+description: Submit a new partner preset to the trusted ecosystem / 信頼されるエコシステムへのパートナーPreset送信
+labels: [trust, governance]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to submit your organization's preset public key (Ed25519) to Archflow's `allowed_signers` file to become a verified partner.
+        Presetの公開鍵（Ed25519）をArchflowの `allowed_signers` に登録し、検証済みパートナーとなるためにこのフォームを使用します。
+  - type: input
+    id: organization_name
+    attributes:
+      label: Organization or Entity Name / 組織名・エンティティ名
+      description: The name of the organization or partner maintaining the preset.
+      placeholder: Example Corp
+    validations:
+      required: true
+  - type: input
+    id: target_identity
+    attributes:
+      label: Target Identity / 対象アイデンティティ
+      description: The email or unique string associated with your preset signatures. (Must match what you sign with) / Preset署名に関連付けるメールアドレス等の識別子。
+      placeholder: preset@example.com
+    validations:
+      required: true
+  - type: input
+    id: public_key
+    attributes:
+      label: Ed25519 Public Key / Ed25519公開鍵
+      description: Your offline-generated ssh-ed25519 public key. / オフラインで生成された ssh-ed25519 公開鍵。
+      placeholder: ssh-ed25519 AAAAC3NzaC...
+    validations:
+      required: true
+  - type: input
+    id: preset_repository
+    attributes:
+      label: Preset Repository / Presetリポジトリ
+      description: Link to the repository where your preset is maintained. / Presetが管理されているリポジトリへのリンク。
+      placeholder: https://github.com/example/archflow-preset
+    validations:
+      required: true
+  - type: textarea
+    id: verification_contact
+    attributes:
+      label: Out-of-band Verification Contact / アウトオブバンド検証用連絡先
+      description: How can Archflow governance reviewers securely contact you to verify this key out-of-band? / Archflowガバナンス審査員がこの鍵をアウトオブバンドで安全に確認するための連絡方法。
+      placeholder: |
+        Security lead email: security@example.com
+        Identity verification context: ...
+    validations:
+      required: true
