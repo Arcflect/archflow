@@ -6,11 +6,13 @@ Reference: `ARCHITECTURE_RULES.md`
 
 ## Purpose
 
-This note verifies the current `src/` structure against the architecture rules and
-records the remaining gaps that should still guide refactoring and review.
+> **Note to Contributors:** 
+> If you want to know **what** features we are building next, see the [ROADMAP.md](../../ROADMAP.md). 
+> This document explains **how** the internal codebase is currently structured against our architectural rules, and records technical debt.
 
-It replaces the earlier pre-refactor audit from issue #191 with a shorter
-"what is aligned now / what is still transitional" view.
+This note verifies the current `src/` structure against our architecture rules and records the remaining gaps that should still guide refactoring and review.
+
+It replaces the earlier pre-refactor audit from issue #191 with a shorter "what is aligned now / what is still transitional" view.
 
 ## 1. Current structure snapshot
 

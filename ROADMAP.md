@@ -10,6 +10,15 @@ Related documents:
 
 ---
 
+## Strategic Vision
+
+> **Batonel** is the open-source CLI foundation of **Arcflect**. 
+> While Batonel provides the ecosystem for structural contracts (init, plan, scaffold, verify), our primary commercial product focus is delivering the **Arcflect Handoff MVP** using Batonel as its execution engine.
+> 
+> The roadmap below reflects the stabilization of the Batonel OSS foundation and its progression toward enabling the Handoff use-case, followed by broader governance and enterprise capabilities.
+
+---
+
 ## English
 
 ### Phase 0: Repository bootstrap
@@ -266,6 +275,15 @@ Tracking issues:
 ---
 
 ## 日本語
+
+### 戦略ビジョン
+
+> **Batonel** は、**Arcflect** ブランドにおけるオープンソースの CLI 基盤（エンジン）です。
+> Batonel 自体は構造や契約を支えるエコシステム（init, plan, scaffold, verify）を提供しますが、現在の私たちの主要な商用プロダクトの中心は、この Batonel を実行エンジンとして活用した **Arcflect Handoff MVP** の提供になります。
+>
+> 以下のロードマップは、この Batonel OSS 基盤の安定化と、Handoff ユースケースの実現に向けた前進、そしてその後のガバナンスおよびエンタープライズ機能への拡張を示しています。
+
+---
 
 ### Phase 0: リポジトリ初期整備
 
