@@ -1,57 +1,16 @@
-# Batonel Prompt Generation: Usage Examples
+# Batonel CLI Reference Manual
 
-This document provides typical commands to initialize and verify prompt generation across the different example architectures provided in this repository.
+This document provides comprehensive usage examples for the Batonel CLI commands, structured according to the core command hierarchy.
 
-## Prerequisites
-Ensure the binary is built and available. You can run it via `cargo run` from the project root.
-
-Official CLI distribution/update operations are documented in:
-
-- `docs/release-operations.md`
+> **Note:** For installation instructions, please refer to the [README](../README.md).
 
 ---
 
-## CLI Distribution Quick Start
+## 1. Primary Workflow
 
-For users, use the official installer script (Linux/macOS).
+The core loop of converting an architectural preset into an executable reality.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/Arcflect/batonel/main/scripts/install-batonel.sh | bash
-```
-
-Install a pinned version:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Arcflect/batonel/main/scripts/install-batonel.sh | bash -s -- vX.Y.Z
-```
-
-For CI, prefer pinned binary installation with checksum verification.
-
-```bash
-BATONEL_VERSION=vX.Y.Z
-if [[ "$(uname -m)" == "aarch64" || "$(uname -m)" == "arm64" ]]; then
-  BATONEL_TARGET=aarch64-unknown-linux-gnu
-else
-  BATONEL_TARGET=x86_64-unknown-linux-gnu
-fi
-
-curl -fsSL -o batonel.tar.gz "https://github.com/Arcflect/batonel/releases/download/${BATONEL_VERSION}/batonel-${BATONEL_VERSION}-${BATONEL_TARGET}.tar.gz"
-curl -fsSL -o batonel.tar.gz.sha256 "https://github.com/Arcflect/batonel/releases/download/${BATONEL_VERSION}/batonel-${BATONEL_VERSION}-${BATONEL_TARGET}.tar.gz.sha256"
-sha256sum -c batonel.tar.gz.sha256
-tar -xzf batonel.tar.gz
-chmod +x batonel
-./batonel --version
-```
-
-CI guideline:
-
-- Pin `BATONEL_VERSION` explicitly (do not install floating latest)
-- Cache by `${BATONEL_VERSION}-${BATONEL_TARGET}`
-- Validate with `batonel --version` before running pipeline steps
-
----
-
-## Preset Bootstrap: `batonel init`
+### Preset Bootstrap (`init`)
 
 Use `batonel init` as the minimal startup command.
 
@@ -118,7 +77,7 @@ The check validates:
 
 ---
 
-## 1. Minimal Example
+### Minimal Example
 A flat architecture with simple domain and application layers.
 
 ```bash
@@ -135,7 +94,7 @@ cargo run --manifest-path ../../../Cargo.toml -- prompt user
 cargo run --manifest-path ../../../Cargo.toml -- prompt create_user
 ```
 
-## 2. Generic Layered Example
+### Generic Layered Example
 A traditional N-tier layered architecture.
 
 ```bash
@@ -151,7 +110,7 @@ cargo run --manifest-path ../../../Cargo.toml -- prompt create_user_controller
 cargo run --manifest-path ../../../Cargo.toml -- prompt user_repository
 ```
 
-## 3. Rust Clean Hexagonal Example
+### Rust Clean Hexagonal Example
 A sophisticated Hexagonal (Ports & Adapters) architecture with crate isolation.
 
 ```bash
@@ -169,23 +128,7 @@ cargo run --manifest-path ../../../Cargo.toml -- prompt create_user_handler
 
 ---
 
-## Output Options
-
-### Compact Mode
-Optimized for smaller LLM context windows or lightweight models, stripping metadata headers and list spacing.
-```bash
-cargo run --manifest-path [PATH_TO_CARGO_TOML] -- prompt [ARTIFACT] --mode compact
-```
-
-### Standard Mode (Default)
-Human-readable Markdown with clear headers and full context.
-```bash
-cargo run --manifest-path [PATH_TO_CARGO_TOML] -- prompt [ARTIFACT] --mode standard
-```
-
----
-
-## Minimal CI Example: `batonel verify`
+### Project Verification (`verify`)
 
 Use the workflow file below as a minimal GitHub Actions example:
 
@@ -220,7 +163,31 @@ introducing a full CI platform design.
 
 ---
 
-## PR Gate Example: `batonel audit --strict`
+## 2. Advanced Usage
+
+Operations meant to bridge the gap with AI tooling and triage workflows.
+
+### Output Options
+
+#### Compact Mode
+Optimized for smaller LLM context windows or lightweight models, stripping metadata headers and list spacing.
+```bash
+cargo run --manifest-path [PATH_TO_CARGO_TOML] -- prompt [ARTIFACT] --mode compact
+```
+
+#### Standard Mode (Default)
+Human-readable Markdown with clear headers and full context.
+```bash
+cargo run --manifest-path [PATH_TO_CARGO_TOML] -- prompt [ARTIFACT] --mode standard
+```
+
+---
+
+## 3. Governance and Trust
+
+Operations that maintain and enforce long-term compliance policies across teams.
+
+### PR Gate Example: `batonel audit --strict`
 
 Use the workflow file below as a baseline PR gate setup:
 
@@ -258,7 +225,7 @@ Expected behavior:
 
 ---
 
-## Multi-Repo Compliance Export: `batonel compliance-report`
+### Multi-Repo Compliance Export: `batonel compliance-report`
 
 `compliance-report` aggregates audit outcomes across multiple repositories and exports machine-readable metrics.
 
@@ -332,7 +299,7 @@ Trend metrics include:
 
 ---
 
-## Conservative Remediation: `batonel fix`
+### Conservative Remediation: `batonel fix`
 
 `batonel fix` introduces conservative automation boundaries.
 
@@ -368,7 +335,11 @@ previews and exits non-zero so human review remains mandatory.
 
 ---
 
-## Preset Registry Prototype: `preset-publish` / `preset-install` / `preset-verify`
+## 4. Preset Management
+
+Local distribution for architecture packages.
+
+### Preset Registry Prototype: `preset-publish` / `preset-install` / `preset-verify`
 
 Batonel provides a prototype local registry workflow for preset sharing and alignment verification.
 
@@ -446,7 +417,7 @@ Registry index format:
 
 ---
 
-## Sidecar Guard Checks: `batonel guard`
+### Sidecar Guard Checks: `batonel guard`
 
 Guard checks provide sidecar-first policy enforcement with hook points for:
 
@@ -479,7 +450,7 @@ Fallback behavior when guard rules are unavailable:
 
 ---
 
-## Preset Migration: `preset-migration-plan` / `preset-migration-apply`
+### Preset Migration: `preset-migration-plan` / `preset-migration-apply`
 
 Batonel provides preset versioning and migration tooling to help projects upgrade to a newer preset version while preserving architecture guarantees and identifying conflicts early.
 
@@ -537,7 +508,7 @@ Apply aborts before writing anything if conflicts are present. Resolve conflicts
 
 ---
 
-## Org/Team Override Precedence Model: `policy-resolve`
+### Org/Team Override Precedence Model: `policy-resolve`
 
 Batonel implements a three-level policy override precedence chain:
 

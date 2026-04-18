@@ -174,38 +174,32 @@ Batonel ships with a complete preset governance model:
 
 → [examples/README.md](./examples/README.md)
 
----
+## Read this next
 
-## Docs
+How you proceed depends on what you want to do:
 
-| Topic | Link |
-|-------|------|
-| Architecture flow | [docs/architecture-flow.md](./docs/architecture-flow.md) |
-| Preset guide | [docs/presets.md](./docs/presets.md) |
-| Preset onboarding | [docs/preset-onboarding.md](./docs/preset-onboarding.md) |
-| Schema reference | [docs/schema-guide.md](./docs/schema-guide.md) |
-| Governance & RBAC | [docs/governance-rbac.md](./docs/governance-rbac.md) |
-| Compliance maturity | [docs/ecosystem-compliance-maturity.md](./docs/ecosystem-compliance-maturity.md) |
-| Glossary | [docs/glossary.md](./docs/glossary.md) |
-| Design decisions | [docs/decisions/README.md](./docs/decisions/README.md) |
-| Roadmap | [ROADMAP.md](./ROADMAP.md) |
+**For Users & Developers:**
+- **[CLI Reference Manual](./docs/usage.md)**: Deep dive into using every command.
+- **[Preset Guide](./docs/presets.md)** & **[Onboarding](./docs/preset-onboarding.md)**: Learn how to manage architectural shapes.
+- **[Schema Reference](./docs/schema-guide.md)**: How to write `.contract.yaml` files.
+
+**For Project Contributors & Architects:**
+- **[Roadmap](./ROADMAP.md)**: See what we are building next (Focus: Arcflect Handoff MVP).
+- **[Architecture State](./docs/architecture/current-state.md)**: Understand the internal codebase structure and technical debt.
+- **[Governance & RBAC](./docs/governance-rbac.md)**: How organizational policies are enforced.
 
 Core concept docs:
-[project](./docs/concepts/project.md) ·
-[artifact](./docs/concepts/artifact.md) ·
-[contract](./docs/concepts/contract.md) ·
-[prompt](./docs/concepts/prompt.md) ·
-[handoff](./docs/concepts/handoff.md) ·
-[verify](./docs/concepts/verify.md)
+[project](./docs/concepts/project.md) · [artifact](./docs/concepts/artifact.md) · [contract](./docs/concepts/contract.md) · [prompt](./docs/concepts/prompt.md) · [handoff](./docs/concepts/handoff.md) · [verify](./docs/concepts/verify.md)
 
 ---
 
-## About Arcflect
+## About Arcflect 
 
-Arcflect Batonel is part of the [Arcflect](https://github.com/Arcflect) project.
+**Arcflect** is an overarching brand dedicated to designing responsibility, handoff, and progression structures for engineering organizations in the AI era.
 
-Arcflect builds tooling for design responsibility, handoff, and governance in AI-assisted development.
-Batonel is its open source foundation — the engine that turns architectural intent into executable structure.
+**Batonel** (this repository) is the core open-source foundation of Arcflect. It acts as the execution engine that turns architectural intent into structured artifacts.
+
+Currently, Batonel is focused on delivering its first major commercial use-case as the engine for **Arcflect Handoff**—a tool dedicated to making software repositories fully transferable to new developers and AI agents.
 
 ---
 
