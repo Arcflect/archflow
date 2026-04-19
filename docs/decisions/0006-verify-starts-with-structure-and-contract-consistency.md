@@ -1,5 +1,8 @@
 # 0006 Verify starts with structure and contract consistency
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-03-28
 
@@ -185,6 +188,9 @@ It only establishes ordering:
 ## 日本語
 
 # 0006 Verify は構造と contract の整合から始まる
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス：採択済み
 - 日付：2026-03-28

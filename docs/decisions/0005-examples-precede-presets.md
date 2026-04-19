@@ -1,5 +1,8 @@
 # 0005 Examples precede presets
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-03-28
 
@@ -68,6 +71,9 @@ This decision supports the current documentation direction in `docs/presets.md`.
 ## 日本語
 
 # 0005 Examples は preset より先に来る
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス：採択済み
 - 日付：2026-03-28

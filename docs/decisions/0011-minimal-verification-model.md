@@ -1,5 +1,8 @@
 # 0011 Minimal Verification Model
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-03-31
 
@@ -44,6 +47,9 @@ Results are packaged into a unified `VerifyReport`, which provides:
 ## 日本語
 
 # 0011 最小限の検証モデル (Minimal Verification Model)
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス: 承認済み
 - 日付: 2026-03-31

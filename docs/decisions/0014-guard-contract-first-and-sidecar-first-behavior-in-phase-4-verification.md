@@ -1,5 +1,8 @@
 # 0014 Guard Contract-First and Sidecar-First Behavior in Phase 4 Verification
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-04-01
 
@@ -91,6 +94,9 @@ a new ADR before being accepted:
 ## 日本語
 
 # 0014 Phase 4 verification における Contract-First および Sidecar-First 挙動の保護
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス: 承認済み
 - 日付: 2026-04-01

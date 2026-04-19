@@ -1,5 +1,8 @@
 # 0024-preset-signature-and-trust-verification
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: proposed
 - Date: 2026-04-13
 

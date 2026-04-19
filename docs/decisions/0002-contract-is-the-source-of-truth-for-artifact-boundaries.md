@@ -1,5 +1,8 @@
 # 0002 Contract is the source of truth for artifact boundaries
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-03-28
 
@@ -73,6 +76,9 @@ This decision should guide future verify behavior and prompt design.
 ## 日本語
 
 # 0002 Contract は artifact の境界にとっての真実の源である
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス：採択済み
 - 日付：2026-03-28
