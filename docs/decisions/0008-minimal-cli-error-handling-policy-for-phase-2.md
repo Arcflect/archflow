@@ -1,5 +1,8 @@
 # 0008-minimal-cli-error-handling-policy-for-phase-2
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-03-29
 
@@ -51,6 +54,9 @@ This explicitly satisfies the Phase 2 roadmap goal: *"Do not overbuild. Clear an
 ## 日本語
 
 # 0008-minimal-cli-error-handling-policy-for-phase-2
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - Status: accepted
 - Date: 2026-03-29

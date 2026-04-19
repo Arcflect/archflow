@@ -1,5 +1,8 @@
 # 0016 Define Preset Packaging Approach
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-04-02
 
@@ -113,6 +116,9 @@ Those concerns may be added later if needed, but they are not part of the first 
 ## 日本語
 
 # 0016 preset のパッケージング方針を定義する
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス: 承認済み
 - 日付: 2026-04-02

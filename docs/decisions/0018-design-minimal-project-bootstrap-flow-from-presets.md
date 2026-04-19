@@ -1,5 +1,8 @@
 # 0018 Design Minimal Project Bootstrap Flow From Presets
 
+> **Note on History**: This decision was originally made when the project was known as **Archflow**.
+> References within have been updated to **Batonel** for consistency with current documentation, but the original conceptual and architectural intent remains unchanged.
+
 - Status: accepted
 - Date: 2026-04-03
 
@@ -86,6 +89,9 @@ This keeps behavior predictable and avoids silent fallback to a different preset
 ## 日本語
 
 # 0018 preset からの最小プロジェクトブートストラップフローを設計する
+
+> **歴史的背景に関する注記**: この決定は、プロジェクトが **Archflow** と呼ばれていた時期に行われたものです。
+> 現在のドキュメントとの整合性を保つため、内部の参照は **Batonel** に更新されていますが、元の概念的およびアーキテクチャ上の意図は変更されていません。
 
 - ステータス: 承認済み
 - 日付: 2026-04-03

@@ -18,6 +18,15 @@ but also **why** it was designed this way.
 
 ---
 
+## Project Lineage (Archflow to Batonel)
+
+**Note**: This project was originally known as **Archflow**.
+Many of the early decision records (ADRs 0001 through 0024) were formulated during the Archflow era.
+For clarity and consistency, references within those documents and their filenames have been updated to use the current **Batonel** naming. However, the original conceptual and architectural intent of those decisions remains completely unchanged.
+Each of these early records includes a brief historical annotation at the top.
+
+---
+
 ## Why this directory exists
 
 Batonel is concept-heavy.
@@ -192,6 +201,15 @@ Batonel には、後になって不明確になる可能性のある多くの設
 - verify がどのように始まるべきか
 
 これらの決定記録は、コントリビューターがプロジェクトが**何**をするかだけでなく、**なぜ**このように設計されたかを理解するのに役立ちます。
+
+---
+
+### プロジェクトの系譜 (Archflow から Batonel へ)
+
+**注記**: このプロジェクトは当初 **Archflow** という名称でした。
+初期の決定記録（ADR 0001〜0024）の多くは、Archflow時代に策定されたものです。
+明確性と一貫性のために、それらのドキュメント内の参照やファイル名は現在の **Batonel** という名前に更新されています。しかし、当時の決定の背後にある概念やアーキテクチャ上の意図は一切変更されていません。
+これらの初期の記録の冒頭には、歴史的背景に関する短い注釈が添えられています。
 
 ---
 
