@@ -1,8 +1,8 @@
 # Current State: Architecture Rule Alignment
 
-Date: 2026-04-10
-Target issue: #202
-Reference: `ARCHITECTURE_RULES.md`
+Date: 2026-04-25
+Target issues: #202, #262
+Reference: `ARCHITECTURE_RULES.md`, `docs/architecture/layer-guide.md`
 
 ## Purpose
 
@@ -13,6 +13,8 @@ Reference: `ARCHITECTURE_RULES.md`
 This note verifies the current `src/` structure against our architecture rules and records the remaining gaps that should still guide refactoring and review.
 
 It replaces the earlier pre-refactor audit from issue #191 with a shorter "what is aligned now / what is still transitional" view.
+
+> **See also**: [`docs/architecture/layer-guide.md`](./layer-guide.md) for a contributor-facing module placement guide, placement decision flowchart, and boundary violation checklist.
 
 ## 1. Current structure snapshot
 
@@ -59,6 +61,12 @@ The following rule expectations are already reflected in the implementation:
 
 6. Structured application errors exist
 - Application-facing error types now exist instead of only ad hoc string errors.
+
+7. Shared CLI execution pipeline is formalized
+- `src/cli/runner.rs` provides generic `run_usecase`, `print_command_header`,
+  `exit_on_failure`, and `write_output` helpers.
+- Command arms for Init, Plan, Scaffold, Verify use the runner; legacy `commands/`
+  executors are not yet migrated.
 
 ## 3. Remaining gaps against the rules
 
@@ -128,10 +136,11 @@ Until the migration is complete, reviewers should treat architecture alignment a
 The next architecture-alignment wins are:
 
 1. Replace direct legacy config access with narrower app-facing loaders or ports where helpful.
-2. Keep shrinking `model` and `generator` toward domain/infra ownership.
-3. Introduce `shared/` only if a primitive is truly stable and cross-cutting.
-4. Move report rendering helpers from `commands/verify.rs` into `infra/` once a
-   `VerifyRendererAdapter` is introduced, completing the full `commands/` cleanup.
+2. Keep shrinking `model/` and `generator/` toward domain/infra ownership (see `layer-guide.md` for migration directions).
+3. Back legacy `commands/` executors (`audit`, `fix`, `triage`, `prompt`, etc.) with `app/usecase/` modules one at a time.
+4. Introduce `shared/` only if a primitive is truly stable and cross-cutting.
+5. Move report rendering helpers from `commands/verify.rs` into `infra/rendering/` as a `VerifyRendererAdapter`.
+6. Move `generator/resolver.rs` path resolution rules into `domain/generation/`.
 
 ## 6. Status summary
 
@@ -140,3 +149,5 @@ The next architecture-alignment wins are:
 - [x] remaining gaps identified
 - [x] review interpretation recorded for future PRs
 - [x] app/usecase layer owns orchestration for init, plan, scaffold, verify (#260)
+- [x] cli/runner.rs introduced as shared execution pipeline (#261)
+- [x] layer responsibilities and placement guide documented (#262) → `layer-guide.md`

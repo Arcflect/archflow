@@ -35,3 +35,11 @@ Before review:
 - [ ] Re-read `ARCHITECTURE_RULES.md` if the change crosses more than one layer
 - [ ] Update `docs/architecture/current-state.md` when the boundary picture materially changes
 - [ ] Call out any temporary architecture debt in the PR summary
+
+---
+
+## Reference
+
+- [Layer Responsibilities Guide](./layer-guide.md) — placement flowchart, per-layer rules, common change type recipes, and boundary violation review checklist.
+- [ARCHITECTURE_RULES.md](../ARCHITECTURE_RULES.ja.md) — full rule set (Japanese).
+- [current-state.md](./current-state.md) — current alignment status and remaining gaps.
