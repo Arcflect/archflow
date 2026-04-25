@@ -23,235 +23,65 @@ Related documents:
 
 ## English
 
-### Phase 0: Repository bootstrap
+### Active Priorities
+These phases represent the core focus of current repository investments.
 
-Goal:
-Establish a clear open source foundation.
-
-Scope:
-- README
-- CONTRIBUTING
-- issue forms
-- labels
-- roadmap
-- initial examples directory
-
-Related docs:
-- `examples/README.md`
-- `docs/contributing-areas.md`
-
-### Phase 1: Core design model
-
-Goal:
-Define the minimum stable concepts of Batonel.
-
-Scope:
-- project definition model
-- placement rule model
-- artifact definition model
-- contract definition model
-- prompt definition model
-
-Deliverables:
-- schema draft
-- sample config files
-- terminology glossary
-
-Related docs:
-- `docs/concepts/project.md`
-- `docs/concepts/artifact.md`
-- `docs/concepts/contract.md`
-- `docs/concepts/prompt.md`
-- `docs/glossary.md`
-- `docs/schema-guide.md`
-- `docs/architecture-flow.md`
-
-### Phase 2: Minimal CLI
-
-Goal:
-Provide the first usable command-line flow.
-
-Scope:
-- `batonel init`
-- `batonel plan`
-- `batonel scaffold`
-
-Deliverables:
-- config initialization
-- structure generation
-- artifact sidecar generation
-
-Related docs:
-- `docs/roadmap-detail.md`
-- `docs/decisions/README.md`
-
-### Phase 3: AI handoff layer
-
-Goal:
-Make each artifact directly usable by lightweight coding models.
-
-Scope:
-- `batonel prompt`
-- prompt templates
-- contract-to-prompt conversion
-
-Deliverables:
-- artifact prompt generation
-- example prompts
-- role-based prompt presets
-
-Related docs:
-- `docs/concepts/prompt.md`
-- `docs/decisions/README.md`
-
-### Phase 4: Verification
-
-Goal:
-Check structural and contract consistency.
-
-Scope:
-- `batonel verify`
-- required contract checks
-- path rule checks
-- status checks
-
-Deliverables:
-- local verification
-- CI example workflow
-
-Related docs:
-- `docs/decisions/0006-verify-starts-with-structure-and-contract-consistency.md`
-- `docs/roadmap-detail.md`
-
-### Phase 5: Presets and ecosystem fit
-
-Goal:
-Make Batonel easier to adopt in real projects.
-
-Scope:
-- Rust preset
-- generic preset
-- example repositories
-- GitHub workflow examples
-
-Related docs:
-- `docs/presets.md`
-- `examples/README.md`
-
-### Longer-term directions
-
-- editor integration
-- GitHub Action
-- import from existing repo structure
-- optional lightweight code-aware checks
-- multi-language presets
-
-### Phase 6: OSS completion and foundation for continuous adoption
-
-Goal:
-Stabilize first-run experience and make architecture contracts explicit.
-
-Scope:
-- stabilize deterministic behavior for `init` and `plan`
+#### Phase 6: OSS completion and foundation for continuous adoption
+**Goal**: Stabilize deterministic onboarding and make architecture contracts explicit.
+- stabilize `init` and `plan` behavior
 - standardize `project.baton.yaml` as contract source
 - expand docs, examples, and onboarding e2e tests
 
-Related docs:
-- [#127](https://github.com/Arcflect/batonel/issues/127)
-- [#128](https://github.com/Arcflect/batonel/issues/128)
-- [#129](https://github.com/Arcflect/batonel/issues/129)
-
-### Phase 7: Audit / Policy / CI integration
-
-Goal:
-Move from one-time generation to continuous governance.
-
-Scope:
-- implement `audit` baseline and integrate with PR gate
+#### Phase 7: Audit / Policy / CI integration
+**Goal**: Move from one-time generation to continuous governance.
+- implement `audit` baseline and PR gate integration
 - define safe `fix` boundaries with dry-run first
 - apply minimum policy profile (required files, naming, forbidden dependencies)
 
-Related docs:
-- [#130](https://github.com/Arcflect/batonel/issues/130)
-- [#131](https://github.com/Arcflect/batonel/issues/131)
-- [#132](https://github.com/Arcflect/batonel/issues/132)
-
-### Phase 8: Preset Registry & Guard
-
-Goal:
-Scale reusable presets while preserving contract-first and sidecar-first behavior.
-
-Scope:
+#### Phase 8: Preset Registry & Guard
+**Goal**: Scale reusable presets while preserving contract-first and sidecar-first behavior.
 - prototype registry publish/install flow
 - introduce Guard sidecar checks in runtime and CI
 - verify preset alignment with architectural intent
 
-Related docs:
-- [#133](https://github.com/Arcflect/batonel/issues/133)
-- [#134](https://github.com/Arcflect/batonel/issues/134)
-- [#135](https://github.com/Arcflect/batonel/issues/135)
-
-### Phase 9: Migration / Org-level Control / Reporting
-
-Goal:
-Provide enterprise-scale evolution and compliance visibility.
-
-Scope:
-- preset versioning and migration tooling
-- org/team override precedence model
-- multi-repo compliance reporting exports
-
-Related docs:
-- [#136](https://github.com/Arcflect/batonel/issues/136)
-- [#137](https://github.com/Arcflect/batonel/issues/137)
-- [#138](https://github.com/Arcflect/batonel/issues/138)
-
-### Phase 10: Autonomous Governance
-
-Goal:
-Automate governance operations while preserving safe human review boundaries.
-
-Scope:
-- standardize `batonel` CLI distribution and release operations
-- automate violation triage and remediation prioritization
-- introduce approval-gated `fix` rollout workflow
-
-Related docs:
-- [#152](https://github.com/Arcflect/batonel/issues/152)
-- [#153](https://github.com/Arcflect/batonel/issues/153)
-- [#154](https://github.com/Arcflect/batonel/issues/154)
-
-### Phase 11: Enterprise Control Plane
-
-Goal:
-Establish enterprise-grade control ownership and operational accountability.
-
-Scope:
-- deliver RBAC role model for governance operations
-- implement expiring override lifecycle and policy exceptions
-- strengthen audit evidence retention and extraction workflow
-
-Related docs:
-- [#155](https://github.com/Arcflect/batonel/issues/155)
-- [#156](https://github.com/Arcflect/batonel/issues/156)
-- [#157](https://github.com/Arcflect/batonel/issues/157)
-
-### Phase 12: Ecosystem & Marketplace
-
-Goal:
-Scale trusted preset ecosystem operations across internal and external contributors.
-
-Scope:
+#### Phase 12: Ecosystem & Marketplace
+**Goal**: Scale trusted preset ecosystem operations across internal and external contributors.
 - define preset signature and trust verification pipeline
 - build partner preset submission and review flow
 - publish ecosystem compliance maturity benchmark model
 
-Related docs:
-- [#158](https://github.com/Arcflect/batonel/issues/158)
-- [#159](https://github.com/Arcflect/batonel/issues/159)
-- [#160](https://github.com/Arcflect/batonel/issues/160)
+### Backlog & Aspirational
+These phases outline future capabilities and enterprise scale.
 
-Tracking issues:
+#### Phase 9: Migration / Org-level Control / Reporting
+**Goal**: Provide enterprise-scale evolution and compliance visibility.
+- preset versioning and migration tooling
+- org/team override precedence model
+- multi-repo compliance reporting exports
+
+#### Phase 10: Autonomous Governance
+**Goal**: Automate governance operations while preserving safe human review boundaries.
+- standardize `batonel` CLI distribution and release operations
+- automate violation triage and remediation prioritization
+- introduce approval-gated `fix` rollout workflow
+
+#### Phase 11: Enterprise Control Plane
+**Goal**: Establish enterprise-grade control ownership and operational accountability.
+- deliver RBAC role model for governance operations
+- implement expiring override lifecycle and policy exceptions
+- strengthen audit evidence retention and extraction workflow
+
+### Historical Foundation (Completed)
+These phases represent the completed capabilities that Batonel already supports today.
+
+- **Phase 0: Repository bootstrap**: Core README, CONTRIBUTING, issue forms, labels, and initial examples directory.
+- **Phase 1: Core design model**: Definition of project, module, role, artifact, contract, and prompt schemas.
+- **Phase 2: Minimal CLI**: The core `batonel init`, `plan`, and `scaffold` workflows.
+- **Phase 3: AI handoff layer**: The `batonel prompt` command and contract-to-prompt conversion.
+- **Phase 4: Verification**: The `batonel verify` command for checking structural and contract consistency.
+- **Phase 5: Presets and ecosystem fit**: Built-in Rust and generic presets, plus GitHub workflows.
+
+### Tracking issues:
 - [#127](https://github.com/Arcflect/batonel/issues/127) Phase6 Task 1: Stabilize init/plan deterministic onboarding
 - [#128](https://github.com/Arcflect/batonel/issues/128) Phase6 Task 2: Standardize project.baton.yaml contract schema
 - [#129](https://github.com/Arcflect/batonel/issues/129) Phase6 Task 3: Expand docs, examples, and onboarding e2e coverage (see [Acceptance Criteria](./docs/acceptance-criteria.md))
@@ -287,235 +117,65 @@ Tracking issues:
 
 ---
 
-### Phase 0: リポジトリ初期整備
+### アクティブな優先事項 (Active Priorities)
+現在のリポジトリ投資の核となるフェーズです。
 
-目標:
-OSS としての土台を整える。
-
-対象:
-- README
-- CONTRIBUTING
-- issue forms
-- labels
-- roadmap
-- examples ディレクトリの初期化
-
-関連ドキュメント:
-- `examples/README.md`
-- `docs/contributing-areas.md`
-
-### Phase 1: コア設計モデル
-
-目標:
-Batonel の最小概念を安定化する。
-
-対象:
-- project definition model
-- placement rule model
-- artifact definition model
-- contract definition model
-- prompt definition model
-
-成果物:
-- schema draft
-- sample config files
-- 用語集
-
-関連ドキュメント:
-- `docs/concepts/project.md`
-- `docs/concepts/artifact.md`
-- `docs/concepts/contract.md`
-- `docs/concepts/prompt.md`
-- `docs/glossary.md`
-- `docs/schema-guide.md`
-- `docs/architecture-flow.md`
-
-### Phase 2: 最小 CLI
-
-目標:
-最初の実用的なコマンドフローを作る。
-
-対象:
-- `batonel init`
-- `batonel plan`
-- `batonel scaffold`
-
-成果物:
-- config 初期化
-- 構造生成
-- artifact sidecar 生成
-
-関連ドキュメント:
-- `docs/roadmap-detail.md`
-- `docs/decisions/README.md`
-
-### Phase 3: AI handoff レイヤ
-
-目標:
-各 artifact を軽量モデルへ直接渡せる状態にする。
-
-対象:
-- `batonel prompt`
-- prompt template
-- contract から prompt への変換
-
-成果物:
-- artifact prompt 生成
-- prompt サンプル
-- role ごとの prompt preset
-
-関連ドキュメント:
-- `docs/concepts/prompt.md`
-- `docs/decisions/README.md`
-
-### Phase 4: Verify
-
-目標:
-構造と contract の整合を検査できるようにする。
-
-対象:
-- `batonel verify`
-- contract 必須項目チェック
-- path rule チェック
-- status チェック
-
-成果物:
-- ローカル verify
-- CI 用サンプル workflow
-
-関連ドキュメント:
-- `docs/decisions/0006-verify-starts-with-structure-and-contract-consistency.md`
-- `docs/roadmap-detail.md`
-
-### Phase 5: Preset と導入しやすさ
-
-目標:
-実プロジェクトへ導入しやすくする。
-
-対象:
-- Rust preset
-- generic preset
-- example repository
-- GitHub workflow examples
-
-関連ドキュメント:
-- `docs/presets.md`
-- `examples/README.md`
-
-### 長期的な方向性
-
-- エディタ統合
-- GitHub Action
-- 既存 repo からのルール逆生成
-- optional な軽量コードチェック
-- 多言語 preset
-
-### Phase 6: OSS完成と継続利用基盤の土台
-
-目標:
-初回体験を安定化し、アーキテクチャ契約を明示的に扱えるようにする。
-
-対象:
+#### Phase 6: OSS完成と継続利用基盤の土台
+**目標**: 初回体験を安定化し、アーキテクチャ契約を明示的に扱えるようにする。
 - `init` / `plan` の決定論的挙動を安定化
 - `project.baton.yaml` を契約ソースとして標準化
 - ドキュメント、サンプル、オンボーディングe2eテストを拡充
 
-関連ドキュメント:
-- [#127](https://github.com/Arcflect/batonel/issues/127)
-- [#128](https://github.com/Arcflect/batonel/issues/128)
-- [#129](https://github.com/Arcflect/batonel/issues/129)
-
-### Phase 7: Audit / Policy / CI 統合
-
-目標:
-一度きりの生成から、継続的なガバナンスへ移行する。
-
-対象:
+#### Phase 7: Audit / Policy / CI 統合
+**目標**: 一度きりの生成から、継続的なガバナンスへ移行する。
 - `audit` のベースライン実装とPRゲート統合
 - `fix` の安全境界定義（dry-run優先）
 - 最小ポリシープロファイル（必須ファイル、命名、禁止依存）適用
 
-関連ドキュメント:
-- [#130](https://github.com/Arcflect/batonel/issues/130)
-- [#131](https://github.com/Arcflect/batonel/issues/131)
-- [#132](https://github.com/Arcflect/batonel/issues/132)
-
-### Phase 8: Preset Registry と Guard
-
-目標:
-contract-first / sidecar-first の思想を維持したまま、preset再利用を拡大する。
-
-対象:
+#### Phase 8: Preset Registry と Guard
+**目標**: contract-first / sidecar-first の思想を維持したまま、preset再利用を拡大する。
 - registry の publish/install フローを試作
 - 実行時とCIに Guard サイドカーを導入
 - preset が設計意図に整合することを検証
 
-関連ドキュメント:
-- [#133](https://github.com/Arcflect/batonel/issues/133)
-- [#134](https://github.com/Arcflect/batonel/issues/134)
-- [#135](https://github.com/Arcflect/batonel/issues/135)
-
-### Phase 9: Migration / Org-level Control / Reporting
-
-目標:
-組織導入を見据えた更新運用と準拠可視化を提供する。
-
-対象:
-- preset バージョニングと migration ツーリング
-- org/team オーバーライド優先順位モデル
-- 複数repo横断のコンプライアンスレポート
-
-関連ドキュメント:
-- [#136](https://github.com/Arcflect/batonel/issues/136)
-- [#137](https://github.com/Arcflect/batonel/issues/137)
-- [#138](https://github.com/Arcflect/batonel/issues/138)
-
-### Phase 10: Autonomous Governance
-
-目標:
-安全なレビュー境界を維持しつつ、ガバナンス運用を自動化する。
-
-対象:
-- `batonel` CLI配布・リリース運用の標準化
-- 違反トリアージと是正優先度付けの自動化
-- 承認付き `fix` 段階適用ワークフローの導入
-
-関連ドキュメント:
-- [#152](https://github.com/Arcflect/batonel/issues/152)
-- [#153](https://github.com/Arcflect/batonel/issues/153)
-- [#154](https://github.com/Arcflect/batonel/issues/154)
-
-### Phase 11: Enterprise Control Plane
-
-目標:
-組織運用に必要な統制責任と実行責任を明確化する。
-
-対象:
-- ガバナンス運用向けRBACロールモデルの提供
-- 期限付きoverrideとポリシー例外のライフサイクル実装
-- 監査証跡の保持・抽出フロー強化
-
-関連ドキュメント:
-- [#155](https://github.com/Arcflect/batonel/issues/155)
-- [#156](https://github.com/Arcflect/batonel/issues/156)
-- [#157](https://github.com/Arcflect/batonel/issues/157)
-
-### Phase 12: Ecosystem & Marketplace
-
-目標:
-信頼可能なPresetエコシステム運用を内外のコントリビューターへ拡張する。
-
-対象:
+#### Phase 12: Ecosystem & Marketplace
+**目標**: 信頼可能なPresetエコシステム運用を内外のコントリビューターへ拡張する。
 - Preset署名と信頼検証パイプラインの定義
 - パートナーPreset投稿・審査フローの構築
 - エコシステム準拠成熟度ベンチマークモデルの公開
 
-関連ドキュメント:
-- [#158](https://github.com/Arcflect/batonel/issues/158)
-- [#159](https://github.com/Arcflect/batonel/issues/159)
-- [#160](https://github.com/Arcflect/batonel/issues/160)
+### バックログ & 将来構想 (Backlog & Aspirational)
+将来の機能やエンタープライズ規模の運用を示すフェーズです。
 
-トラッキングIssue:
+#### Phase 9: Migration / Org-level Control / Reporting
+**目標**: 組織導入を見据えた更新運用と準拠可視化を提供する。
+- preset バージョニングと migration ツーリング
+- org/team オーバーライド優先順位モデル
+- 複数repo横断のコンプライアンスレポート
+
+#### Phase 10: Autonomous Governance
+**目標**: 安全なレビュー境界を維持しつつ、ガバナンス運用を自動化する。
+- `batonel` CLI配布・リリース運用の標準化
+- 違反トリアージと是正優先度付けの自動化
+- 承認付き `fix` 段階適用ワークフローの導入
+
+#### Phase 11: Enterprise Control Plane
+**目標**: 組織運用に必要な統制責任と実行責任を明確化する。
+- ガバナンス運用向けRBACロールモデルの提供
+- 期限付きoverrideとポリシー例外のライフサイクル実装
+- 監査証跡の保持・抽出フロー強化
+
+### 歴史的基盤 (Historical Foundation - Completed)
+すでに実装され、現在の Batonel を支えている完了済みのフェーズです。
+
+- **Phase 0: リポジトリ初期整備**: コアとなる README、CONTRIBUTING、issue テンプレート、初期 examples ディレクトリ。
+- **Phase 1: コア設計モデル**: project, module, role, artifact, contract, prompt の各スキーマ定義。
+- **Phase 2: 最小 CLI**: `batonel init`, `plan`, `scaffold` のコアワークフロー実装。
+- **Phase 3: AI handoff レイヤ**: `batonel prompt` コマンドと、contract から prompt への変換機能。
+- **Phase 4: Verify**: 構造と contract の整合性を検証する `batonel verify` コマンド。
+- **Phase 5: Preset と導入しやすさ**: Rust および generic なプリセットの内蔵、GitHub Actions ワークフロー例。
+
+### トラッキングIssue:
 - [#127](https://github.com/Arcflect/batonel/issues/127) Phase6 Task 1: Stabilize init/plan deterministic onboarding
 - [#128](https://github.com/Arcflect/batonel/issues/128) Phase6 Task 2: Standardize project.baton.yaml contract schema
 - [#129](https://github.com/Arcflect/batonel/issues/129) Phase6 Task 3: Expand docs, examples, and onboarding e2e coverage
