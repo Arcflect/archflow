@@ -172,6 +172,7 @@ Batonel establishes a verifiable bridge between design and code through a layere
 | [`generic-layered`](./examples/generic-layered/README.md) | Language-agnostic layered structure |
 | [`rust-clean-hexagonal`](./examples/rust-clean-hexagonal/README.md) | Rust workspace with clean architecture |
 
+→ **[See Before & After Examples](./docs/before-after.md)**
 → [examples/README.md](./examples/README.md)
 
 ## Read this next
@@ -355,6 +356,14 @@ Batonel は、多層的な **Quality & Trust Model** を通じて、設計とコ
 
 → 詳細は **[docs/quality-model.md](./docs/quality-model.md)** を参照してください。
 → リリース基準は [docs/acceptance-criteria.md](./docs/acceptance-criteria.md) を参照してください。
+
+---
+
+## 導入例 (Examples)
+
+Batonel が具体的に何を生成するのか、Before/After の視覚的な例を用意しています。
+
+→ **[Before & After の出力例を見る](./docs/before-after.md)**
 
 ---
 
